@@ -288,11 +288,11 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			errorTot++;
 			errorMsg << _T("GK doesn't get second A positions; ");
 		}
-		if (countB > 0 && player.reg_pos == 0)
+		/*if (countB > 0 && player.reg_pos == 0)
 		{
 			errorTot++;
 			errorMsg << _T("GK doesn't get B positions; ");
-		}
+		}*/
         //If more than 1 A, 1 card less for each
         if(countA >= 1)
         {
@@ -353,6 +353,18 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			}
 		}
 
+		/*if (player.reg_pos == 0 && cardCount > 3)
+		{
+			errorTot++;
+			errorMsg << _T("GK doesn't get more than 3 cards; ");
+		}
+
+		if (player.reg_pos == 0 && hasTrick)
+		{
+			errorTot++;
+			errorMsg << _T("GK doesn't get trick cards; ");
+		}*/
+
         if(player.height == 181)
             numTall++;
         //else if(player.height == 186 && player.reg_pos == 0) //GK
@@ -406,9 +418,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				errorMsg << _T("Form is ") << player.form+1 << _T(", should be ") << regForm << _T("; ");
 			}
 			
-            if(player.reg_pos == 0) //GK gets 2 cards
+            if(player.reg_pos == 0) //GK gets 3 cards
             {
-				cardMod += min(gkTrickCards, numTrick); //1 free tricks
+				cardMod += min(gkTrickCards, numTrick); //0 free tricks
 				cardLimit = gkSkillCards + cardMod;
                 if(cardCount > cardLimit)
 				{

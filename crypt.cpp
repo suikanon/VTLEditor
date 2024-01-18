@@ -5,6 +5,7 @@
 
 #include "crypt.h"
 
+// https://nhentai.net/g/459503/
 //encrypter & decrypter helpers ...
 uint8_t *readFile(const TCHAR *path, uint32_t *sizePtr)
 {
