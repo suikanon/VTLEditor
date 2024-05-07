@@ -20,14 +20,19 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 	//============================
 	//Settings
-	int manletBonus = 5;
-	int silverManletBonus = 0;
-	int goldManletBonus = 0;
-	int silverGiantPen = 0;
-	int goldGiantPen = 0;
+	int manletCardBonus = 2;
+	int tallCardBonus = 1;
 
-	int goldRate = 99;
-	int silverRate = 88;
+	int regWMFStatBonus = 6;
+	int silverWFStatBonus = 3;
+	int captainStatBonus = 2;
+
+	int regWMFHeightBonus = 7;
+	int silverWFHeightBonus = 3;
+	int medalCFTFHeightBonus = 5;
+
+	int goldRate = 97;
+	int silverRate = 87;
 	int regRate = 77;
 	int gkRate = 77;
 	int reqNumGold = 2;
@@ -37,11 +42,45 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int silverForm = 8;
 	int regForm = 4;
 
-	int goldIR = 3; //Injury resistence
-	int silverIR = 3;
+	int goldIR = 1; //Injury resistance
+	int silverIR = 1;
 	int regIR = 1;
 
+	int regSkillCardsMin = 3;
+	int medalSkillCardsMin = 4;
+
+	int regSkillCardsMax = 5;
+	int medalSkillCardsMax = 6;
+
+	int trickCards = 5;
+
+	int regCOM = 1;
+	int silverCOM = 3;
+	int goldCOM = 5;
+
+	int maxCOM = 5;
+
+	int gk = 2;
+	int giga = 2;
+	int giant = 7;
+	int tall = 8;
+	int manlet = 6;
+
+	int heightGiga = 205;
+	int heightGiant = 191;
+	int heightTall = 181;
+	int heightTallGK = 185;
+	int heightManlet = 170;
+	
+
+	int manletBonus = 5;
+	int silverManletBonus = 0;
+	int goldManletBonus = 0;
+	int silverGiantPen = 0;
+	int goldGiantPen = 0;
+
 	int gkSkillCards = 2;
+
 	int regSkillCards = 4;
 	int silverSkillCards = 5;
 	int goldSkillCards = 6;
@@ -50,10 +89,6 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int regTrickCards = 2;
 	int silverTrickCards = 3;
 	int goldTrickCards = 3;
-
-	int regCOM = 0;
-	int silverCOM = 1;
-	int goldCOM = 2;
 
 	int greenGiga = 3;
 	int greenGiant = 6;
@@ -67,12 +102,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int redMid = 7;
 	int redManlet = 6;
 
-	int heightGiga = 199;
-	int heightGiant = 194;
-	int heightTall = 185;
-	int heightTallGK = 189;
-	int heightMid = 180;
-	int heightManlet = 175;
+	int heightMid = 170;
 
 	//============================
 
@@ -87,10 +117,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
     int numTall = 0;
     int numMid = 0;
     int numManlet = 0;
-    bool usingRed = true;
+    //bool usingRed = true;
 
 	//Run through all players once to determine height system
-	for (int ii = 0; ii < gteams[teamSel].num_on_team; ii++)
+	/*for (int ii = 0; ii < gteams[teamSel].num_on_team; ii++)
 	{
 		//Find each player on team
 		for (int jj = 0; jj < gnum_players; jj++)
@@ -107,7 +137,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			usingRed = false;
 			break;
 		}
-	}
+	}*/
     
 	//Now check each player for errors
     int errorTot = 0;
@@ -131,11 +161,12 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 		int cardCount = 0;
         int cardMod = 0;
+		int cardMin = 41;
 		int cardLimit = 0;
 		int heightMod = 0;
 		int weakFoot = 2;
         bool hasTrick = false;
-		int targetRate = 0, targetRate2 = 0;
+		int targetRate = 0;
 		int rating = player.drib;
         rating = max(player.gk, rating);
         rating = max(player.finish, rating);
@@ -237,23 +268,37 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
         }
 
 		//Count A positions
-        int countA = 0;
-        for(int jj=0;jj<13;jj++)
-        {
-            if(player.play_pos[jj] > 0)
+		int countA = 0;
+		for (int jj = 0; jj < 13; jj++)
+		{
+			if (player.play_pos[jj] == 2)
 				countA++;
-        }
+		}
 
-        //If more than 1 A, 1 card less for each
+		//Count B positions
+		int countB = 0;
+		for (int jj = 0; jj < 13; jj++)
+		{
+			if (player.play_pos[jj] == 1)
+				countB++;
+		}
+
+		//Can't have GK as second A
         if(countA > 1)
         {
-            if(player.play_pos[12] == 2) //Can't have GK as second A
+            if(player.play_pos[12] == 2) 
 			{
                 errorTot++;
 				errorMsg << _T("Has GK as second A position; ");
 			}
-            cardMod -= (countA - 1);
         }
+
+		//No B positions allowed
+		if (countB > 0)
+		{
+			errorTot++;
+			errorMsg << _T("No B positions allowed; ");
+		}
 
 		//Count cards
 		int numTrick = 0;
@@ -267,13 +312,14 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             if(player.play_skill[jj])
             {
                 cardCount++;
-		//SPECIAL Winter/Spring 24: Malicia (21) is a free card
-		if(jj==21) cardMod++;
-                //Captain gets free captaincy card
-				if(jj==25 && player.id == gteams[teamSel].players[gteams[teamSel].captain_ind])
-                    cardMod++;
+				//Captain gets free captaincy card and stat bonus
+				if (jj == 25 && player.id == gteams[teamSel].players[gteams[teamSel].captain_ind])
+				{
+					cardMod++;
+					targetRate += captainStatBonus;
+				}
                 //Trick cards may be free, count number
-                if(jj<6 || jj==16 || jj==28 || jj==29 || jj==30 || jj==34)
+                if(jj<6 || jj == 9 || jj==16 || jj == 21 || jj==28 || jj==29 || jj==30 || jj==34)
 				{
                     hasTrick = true;
 					numTrick++;
@@ -305,19 +351,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		if(rating < silverRate-silverGiantPen) //Regular player
         {
             numReg++;
-			targetRate = regRate;
-			targetRate2 = regRate;
-			if(player.reg_pos == 0) //GK target rate is 77
-            {
-				targetRate = gkRate;
-				targetRate2 = gkRate;
-			}
+			targetRate += regRate;
+			cardMin = regSkillCardsMin;
 
-			/*if(countA > 3)
-			{
-				errorTot++;
-				errorMsg << _T("Regular player with > 3 A positions; ");
-			}*/
+			weakFoot = 4;
 
             if(player.form+1 != regForm)
 			{
@@ -325,71 +362,49 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				errorMsg << _T("Form is ") << player.form+1 << _T(", should be ") << regForm << _T("; ");
 			}
 			
-            if(player.reg_pos == 0) //GK gets 2 cards
+            if(player.reg_pos == 0) //GK cannot be in the manlet height bracket
             {
-				cardMod += min(gkTrickCards, numTrick); //1 free tricks
-				cardLimit = gkSkillCards + cardMod;
-                
-				if(player.height > heightMid && player.height < heightTallGK)
-				{
-                    errorTot++;
-					errorMsg << _T("GKs in this bracket must be ") << heightTallGK << _T("cm; ");
-				}
-				if (player.height > heightGiant)
-				{
-					errorMsg << _T("GK heights cannot exceed ") << heightGiant << _T("cm; ");
-				}
-            }
-            else
-			{
-				cardMod += min(regCOM, numCom); //0 free COM styles
-				cardMod += min(regTrickCards, numTrick); //2 free tricks
-				//cardMod += min(1, (countA - 1)); //1 free A-position
-				cardLimit = regSkillCards + cardMod; //3 skill cards
-			}
-            
-			if(player.injury+1 > regIR)
-			{
-				errorTot++;
-				errorMsg << _T("Injury resist is ") << player.injury+1 << _T(", should be ") << regIR << _T("; ");
-			}
-
-			if (player.height <= heightManlet && usingRed)
-			{
-				targetRate += manletBonus;
-				targetRate2 += manletBonus;
-			}
-
-			//SPECIAL Spring 24: non-medals that are registered in a blue position (CB, LB, RB) get +5 defensive prowess
-			if (player.reg_pos >= 1 && player.reg_pos <= 3)
-			{
-				targetRate2 += 5;
-			}
-			
-			//SPECIAL Spring 24: red heights non-medals registered in a red position (CF/SS/LWF/RWF) receive a +5 boost to all stats and can stack with the boost from being 175cm however these players cannot be given a 2nd A position
-			if (player.reg_pos >= 9 && player.reg_pos <= 12 && usingRed)
-			{
-				targetRate += 5;
-				targetRate2 += 5;
-				if (countA > 1)
+				if (player.height == heightManlet)
 				{
 					errorTot++;
-					errorMsg << _T("Illegal 2nd A position on red heights non-medal forward; ");
+					errorMsg << _T("GKs cannot be in this height bracket;");
 				}
+            }
+
+			if (countA > 1)
+			{
+				errorTot++;
+				errorMsg << _T("Only 1 A position for non-medals;");
 			}
 
-			//SPECIAL Spring 24: green heights non-medals registered in a red position (CF/SS/LWF/RWF) get an additional 5cm of height except for 194cm players and 199cm players
-			if (player.reg_pos >= 9 && player.reg_pos <= 12 && !usingRed && player.height <= heightTall)
+			cardMod += regCOM; //1 free COM styles
+			cardMod += min(trickCards, numTrick); //5 free tricks
+			cardLimit = regSkillCardsMax + cardMod; //5 skill cards
+            
+			if (numCom > regCOM)
 			{
-				heightMod = 5;
+				errorTot++;
+				errorMsg << _T("Has ") << numCom << _T(" COM playing styles, should be no more than ") << regCOM << _T("; ");
+			}
+
+			if (player.injury + 1 != regIR)
+			{
+				errorTot++;
+				errorMsg << _T("Injury resist is ") << player.injury + 1 << _T(", should be ") << regIR << _T("; ");
+			}
+
+			if (player.reg_pos == 6 || player.reg_pos == 7 || player.reg_pos == 9 || player.reg_pos == 10)
+			{
+				heightMod += regWMFHeightBonus;
+				targetRate += regWMFStatBonus;
 			}
 		}
 		/* SILVER */
         else if(rating < goldRate-goldGiantPen) //Silver player
         {
             numSilver++;
-			targetRate = silverRate;
-			targetRate2 = silverRate;
+			targetRate += silverRate;
+			cardMin = medalSkillCardsMin;
 
 			weakFoot = 4;
 
@@ -408,33 +423,46 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
                 errorTot++;
 				errorMsg << _T("Medals cannot play as GK; ");
 			}
-			if(player.height >= heightGiant) //HA get penalty
-			{
-				targetRate -= silverGiantPen;
-				targetRate2 -= silverGiantPen;
-			}
-			else if(player.height <= heightManlet && usingRed)
-            {
-				targetRate += silverManletBonus;
-				targetRate2 += silverManletBonus;
-			}
-            cardMod += min(silverTrickCards, numTrick); //3 free tricks
-			cardMod += min(silverCOM, numCom); //1 free COM
-			//cardMod += min(1, (countA - 1)); //1 free A-position
-			cardLimit = silverSkillCards + cardMod; //4 skill cards
 
-			if(player.injury+1 > silverIR)
+			if (countA > 2)
+			{
+				errorTot++;
+				errorMsg << _T("Only 2 A positions for medals;");
+			}
+
+            cardMod += min(trickCards, numTrick); //5 free tricks
+			cardMod += silverCOM; //3 free COM
+			cardLimit = medalSkillCardsMax + cardMod; //6 skill cards
+
+			if (numCom > silverCOM)
+			{
+				errorTot++;
+				errorMsg << _T("Has ") << numCom << _T(" COM playing styles, should be no more than ") << silverCOM << _T("; ");
+			}
+
+			if(player.injury+1 != silverIR)
 			{
 				errorTot++;
 				errorMsg << _T("Injury resist is ") << player.injury+1 << _T(", should be ") << silverIR << _T("; ");
 			}
+
+			if (player.reg_pos == 9 || player.reg_pos == 10)
+			{
+				heightMod += silverWFHeightBonus;
+				targetRate += silverWFStatBonus;
+			}
+
+			if (player.reg_pos == 12 && (player.play_style == 3 || player.play_style == 13))
+			{
+				heightMod += medalCFTFHeightBonus;
+			}
         }
 		/* GOLD */
-        else //rating == 99 //Gold player
+        else //rating == 97 //Gold player
         {
             numGold++;
-			targetRate = goldRate;
-			targetRate2 = goldRate;
+			targetRate += goldRate;
+			cardMin = medalSkillCardsMin;
 
 			weakFoot = 4;
 
@@ -453,50 +481,66 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
                 errorTot++;
 				errorMsg << _T("Medals cannot play as GK; ");
 			}
-			if(player.height >= heightGiant) //Medal HA penalty
-			{
-				targetRate -= goldGiantPen;
-				targetRate2 -= goldGiantPen;
-			}
-			else if(player.height <= heightManlet && usingRed)
-            {
-				targetRate += goldManletBonus;
-				targetRate2 += goldManletBonus;
-			}
 
-			if (player.height > heightGiant)
+			if (countA > 2)
 			{
-				errorMsg << _T("Gold heights cannot exceed ") << heightGiant << _T("cm; ");
+				errorTot++;
+				errorMsg << _T("Only 2 A positions for medals;");
 			}
 			
-            cardMod += min(goldTrickCards, numTrick); //4 free tricks
-			cardMod += min(goldCOM, numCom); //2 free COMs
-			cardLimit = goldSkillCards + cardMod; //5 skill cards
+            cardMod += min(trickCards, numTrick); //5 free tricks
+			cardMod += goldCOM; //5 free COMs
+			cardLimit = medalSkillCardsMax + cardMod; //6 skill cards
+
+			if (numCom > goldCOM)
+			{
+				errorTot++;
+				errorMsg << _T("Has ") << numCom << _T(" COM playing styles, should be no more than ") << goldCOM << _T("; ");
+			}
             
 			if(player.injury+1 > goldIR)
 			{
 				errorTot++;
 				errorMsg << _T("Injury resist is ") << player.injury+1 << _T(", should be ") << goldIR << _T("; ");
 			}
+
+			if (player.reg_pos == 12 && (player.play_style == 3 || player.play_style == 13))
+			{
+				heightMod += medalCFTFHeightBonus;
+			}
 		}
 
 		//Check player height
-		if ((player.height - heightMod) <= heightManlet)
+		if ((player.height - heightMod) == heightManlet)
 		{
 			numManlet++;
-			cardLimit++; //Manlets get a bonus card
-			weakFoot = 4; //Manlets get weak foot acc/use 4/4
+			cardLimit += manletCardBonus; //Manlets get two bonus cards
 		}
-		else if ((player.height - heightMod) == heightMid)
-			numMid++;
 		else if ((player.height - heightMod) == heightTall)
+		{
 			numTall++;
+			cardLimit += tallCardBonus; //Talls get one bonus card
+			if (player.reg_pos == 0)
+			{
+				errorTot++;
+				errorMsg << _T("GK in the ") << heightTall << _T(" cm bracket should have their height increased to ") << heightTallGK << _T(" cm; ");
+			}
+		}
 		else if ((player.height - heightMod) == heightTallGK && player.reg_pos == 0) //GK
+		{
 			numTall++;
+			cardLimit += tallCardBonus; //Talls get one bonus card
+		}
 		else if ((player.height - heightMod) == heightGiant)
+		{
 			numGiant++;
+			weakFoot = 2;
+		}
 		else if ((player.height - heightMod) == heightGiga)
+		{
 			numGiga++;
+			weakFoot = 2;
+		}
 		else
 		{
 			errorTot++;
@@ -504,12 +548,12 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		}
 
 		//Check weak foot ratings
-		if (player.weak_use + 1 > weakFoot)
+		if (player.weak_use + 1 != weakFoot)
 		{
 			errorTot++;
 			errorMsg << _T("Weak foot usage > ") << weakFoot << _T("; ");
 		}
-		if (player.weak_acc + 1 > weakFoot)
+		if (player.weak_acc + 1 != weakFoot)
 		{
 			errorTot++;
 			errorMsg << _T("Weak foot accuracy > ") << weakFoot << _T("; ");
@@ -522,11 +566,24 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			errorMsg << _T("Has ") << cardCount << _T(" cards, only allowed ") << cardLimit << _T("; ");
 		}
 
-		//Check PES skill card limit of 10
-		if(cardCount-numCom > 10)
+		if (cardCount - numCom < cardMin)
 		{
-            errorTot++;
-			errorMsg << _T("Has ") << cardCount-numCom << _T(" skill cards, PES limit is 10, please swap to COM cards or trade for additional A positions; ");
+			errorTot++;
+			errorMsg << _T("Has ") << cardCount - numCom << _T(" skill cards, must have at least ") << cardMin << _T("; ");
+		}
+
+		//Check PES skill card limit of 10
+		if (cardCount - numCom > 10)
+		{
+			errorTot++;
+			errorMsg << _T("Has ") << cardCount - numCom << _T(" skill cards, PES limit is 10; ");
+		}
+
+		//Check PES skill card limit of 10
+		if (numCom > maxCOM)
+		{
+			errorTot++;
+			errorMsg << _T("Has ") << numCom << _T(" COM playing styles, limit is 5; ");
 		}
 
 		//Check player overall rating
@@ -647,10 +704,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Attacking Prowess is ") << player.atk << _T(", should be ") << targetRate << _T(" or less; ");
         }
-        if(player.def > targetRate2)
+        if(player.def > targetRate)
 		{
             errorTot++;
-			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate2 << _T(" or less; ");
+			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate << _T(" or less; ");
         }
 		if(pesVersion>19 && player.tight_pos != targetRate)
 		{
@@ -673,120 +730,120 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int diff;
 	tstringstream errorMsg;
     //Check heights
-    if(!usingRed) //Using Green height system
-    {
-		msgOut+=_T("Using Green height system\r\n");
-		if (diff = greenGiga - numGiga)
-		{
-			if (diff > 0)
-			{
-				errorTot += diff;
-			}
-			else
-			{
-				errorTot -= diff;
-			}
-			errorMsg << _T("Has ") << numGiga << _T("/") << greenGiga << _T(" ") << heightGiga << _T("cm players; ");
-		}
-        if(diff = greenGiant - numGiant)
-        {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numGiant << _T("/") << greenGiant << _T(" ") << heightGiant << _T("cm players; ");
-        }
-        if(diff = greenTall - numTall)
-        {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numTall << _T("/") << greenTall << _T(" ") << heightTall << _T("/") << heightTallGK << _T("cm players; ");
-        }
-        if(diff = greenMid - numMid)
-        {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numMid << _T("/") << greenMid << _T(" ") << heightMid << _T("cm players; ");
-        }
-        if(diff = greenManlet - numManlet)
-        {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numManlet << _T("/") << greenManlet << _T(" ") << heightManlet << _T("cm players; ");
-        }
-    }
-    else //Using Red height system
-    {
-		msgOut+=_T("Using Red height system\r\n");
-		if (diff = numGiga)
+    
+	msgOut+=_T("Checking for team-level errors.\r\n");
+	if (diff = giga - numGiga)
+	{
+		if (diff > 0)
 		{
 			errorTot += diff;
-			errorMsg << _T("Has ") << numGiga << _T("/") << redGiga << _T(" ") << heightGiga << _T("cm players; ");
 		}
-        if(diff = numGiant)
+		else
+		{
+			errorTot -= diff;
+		}
+		errorMsg << _T("Has ") << numGiga << _T("/") << giga << _T(" ") << heightGiga << _T("cm players; ");
+	}
+    if(diff = giant - numGiant)
+    {
+        if(diff>0)
         {
             errorTot += diff;
-			errorMsg << _T("Has ") << numGiant << _T("/") << redGiant << _T(" ") << heightGiant << _T("cm players; ");
         }
-        if(diff = redTall - numTall)
+        else
         {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numTall << _T("/") << redTall << _T(" ") << heightTall << _T("/") << heightTallGK << _T("cm players; ");
+            errorTot -= diff;
         }
-        if(diff = redMid - numMid)
-        {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numMid << _T("/") << redMid << _T(" ") << heightMid << _T("cm players; ");
-        }
-        if(diff = redManlet - numManlet)
-        {
-            if(diff>0)
-            {
-                errorTot += diff;
-            }
-            else
-            {
-                errorTot -= diff;
-            }
-			errorMsg << _T("Has ") << numManlet << _T("/") << redManlet << _T(" ") << heightManlet << _T("cm players; ");
-        }
+		errorMsg << _T("Has ") << numGiant << _T("/") << giant << _T(" ") << heightGiant << _T("cm players; ");
     }
+    if(diff = tall - numTall)
+    {
+        if(diff>0)
+        {
+            errorTot += diff;
+        }
+        else
+        {
+            errorTot -= diff;
+        }
+		errorMsg << _T("Has ") << numTall << _T("/") << tall << _T(" ") << heightTall << _T("/") << heightTallGK << _T("cm players; ");
+    }
+	if (diff = manlet - numManlet)
+	{
+		if (diff > 0)
+		{
+			errorTot += diff;
+		}
+		else
+		{
+			errorTot -= diff;
+		}
+		errorMsg << _T("Has ") << numManlet << _T("/") << manlet << _T(" ") << heightManlet << _T("cm players; ");
+	}
+	if (diff = gk - numGK)
+	{
+		if (diff > 0)
+		{
+			errorTot += diff;
+		}
+		else
+		{
+			errorTot -= diff;
+		}
+		errorMsg << _T("Has ") << numGK << _T("/") << gk << _T(" GKs; ");
+	}
+    
+
+  //  else //Using Red height system
+  //  {
+		//msgOut+=_T("Using Red height system\r\n");
+		//if (diff = numGiga)
+		//{
+		//	errorTot += diff;
+		//	errorMsg << _T("Has ") << numGiga << _T("/") << redGiga << _T(" ") << heightGiga << _T("cm players; ");
+		//}
+  //      if(diff = numGiant)
+  //      {
+  //          errorTot += diff;
+		//	errorMsg << _T("Has ") << numGiant << _T("/") << redGiant << _T(" ") << heightGiant << _T("cm players; ");
+  //      }
+  //      if(diff = redTall - numTall)
+  //      {
+  //          if(diff>0)
+  //          {
+  //              errorTot += diff;
+  //          }
+  //          else
+  //          {
+  //              errorTot -= diff;
+  //          }
+		//	errorMsg << _T("Has ") << numTall << _T("/") << redTall << _T(" ") << heightTall << _T("/") << heightTallGK << _T("cm players; ");
+  //      }
+  //      if(diff = redMid - numMid)
+  //      {
+  //          if(diff>0)
+  //          {
+  //              errorTot += diff;
+  //          }
+  //          else
+  //          {
+  //              errorTot -= diff;
+  //          }
+		//	errorMsg << _T("Has ") << numMid << _T("/") << redMid << _T(" ") << heightMid << _T("cm players; ");
+  //      }
+  //      if(diff = redManlet - numManlet)
+  //      {
+  //          if(diff>0)
+  //          {
+  //              errorTot += diff;
+  //          }
+  //          else
+  //          {
+  //              errorTot -= diff;
+  //          }
+		//	errorMsg << _T("Has ") << numManlet << _T("/") << redManlet << _T(" ") << heightManlet << _T("cm players; ");
+  //      }
+  //  }
 	if(errorMsg.rdbuf()->in_avail())
 	{
 		errorMsg << _T("\r\n");

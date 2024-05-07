@@ -15,6 +15,7 @@
     <ProjectGuid>{ACD373D6-744B-4ADF-8E7B-41492B847A4B}</ProjectGuid>
     <RootNamespace>My4ccEditor</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>VTLEditor</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

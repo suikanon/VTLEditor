@@ -8,6 +8,7 @@
 #pragma comment(lib, "Winmm.lib")
 #include <mmsystem.h>
 
+#include <dwmapi.h>
 //----------------------------------------------------------------------
 /*Function prototypes*/
 /*
@@ -128,6 +129,13 @@ pf_encryptWithKeyNew encryptWithKeyNew;
 //				parameter is always NULL
 // CL	[in] The command line for the program, excluding the program name
 // SC	[in] Controls how the window is to be shown
+
+#pragma comment (lib, "Dwmapi")
+
+#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
+#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
+#endif
+
 int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 {
 	ghinst = I; //Global handle to the program instance
@@ -136,7 +144,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	MSG msg;
 
 	wc.cbSize		 = sizeof(WNDCLASSEX);
-	wc.style		 = 0;
+	wc.style		 = 1;
 	wc.lpfnWndProc	 = wnd_proc;
 	wc.cbClsExtra	 = 0;
 	wc.cbWndExtra	 = 0;
@@ -162,10 +170,13 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("4ccEditor Spring 24 Edition (Version D)"),
+		_T("VTLEditor /vt/ League 7 Edition"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
+
+	BOOL value = TRUE;
+	::DwmSetWindowAttribute(ghw_main, DWMWA_USE_IMMERSIVE_DARK_MODE, &value, sizeof(value));
 
 	if(ghw_main == NULL)
 	{
@@ -227,6 +238,9 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 			hw_new = CreateWindowEx(0,_T("SCROLLBAR"),(PTSTR) NULL, WS_CHILD | SBS_HORZ, 
 				0, 642-18, 1102, 18, H, (HMENU)IDC_HSCROLL, GetModuleHandle(NULL), (PVOID) NULL);
+
+			BOOL value = TRUE;
+			::DwmSetWindowAttribute(hw_new, DWMWA_USE_IMMERSIVE_DARK_MODE, &value, sizeof(value));
 
 			RECT rc = {};
 			GetClientRect(H, &rc);
@@ -853,11 +867,22 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					{
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("99"));
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("97"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("3"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+
+						wchar_t oldName[0x1000];
+						wchar_t newName[0x1000];
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
+
+						newName[0] = 0;
+						wcscat(newName, L"ccc9900ff");
+						wcscat(newName, oldName);
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
 					}
 				}
 				break;
@@ -867,11 +892,23 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					{
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("88"));
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("87"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("3"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+
+						wchar_t oldName[0x1000];
+						wchar_t newName[0x1000];
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
+
+						newName[0] = 0;
+						wcscat(newName, L"cccccccff");
+
+						wcscat(newName, oldName);
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
 					}
 				}
 				break;
@@ -887,6 +924,8 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
 					}
 				}
 				break;
