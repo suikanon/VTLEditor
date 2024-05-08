@@ -239,9 +239,6 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 			hw_new = CreateWindowEx(0,_T("SCROLLBAR"),(PTSTR) NULL, WS_CHILD | SBS_HORZ, 
 				0, 642-18, 1102, 18, H, (HMENU)IDC_HSCROLL, GetModuleHandle(NULL), (PVOID) NULL);
 
-			BOOL value = TRUE;
-			::DwmSetWindowAttribute(hw_new, DWMWA_USE_IMMERSIVE_DARK_MODE, &value, sizeof(value));
-
 			RECT rc = {};
 			GetClientRect(H, &rc);
 			const SIZE sz = { rc.right - rc.left, rc.bottom - rc.top };

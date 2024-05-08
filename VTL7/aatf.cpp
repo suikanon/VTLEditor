@@ -699,15 +699,15 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Speed is ") << player.speed << _T(", should be ") << targetRate << _T("; ");
         }
-        if(player.atk > targetRate)
+        if(player.atk != targetRate)
 		{
             errorTot++;
-			errorMsg << _T("Attacking Prowess is ") << player.atk << _T(", should be ") << targetRate << _T(" or less; ");
+			errorMsg << _T("Attacking Prowess is ") << player.atk << _T(", should be ") << targetRate << _T("; ");
         }
-        if(player.def > targetRate)
+        if(player.def != targetRate)
 		{
             errorTot++;
-			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate << _T(" or less; ");
+			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate << _T("; ");
         }
 		if(pesVersion>19 && player.tight_pos != targetRate)
 		{
