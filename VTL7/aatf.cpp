@@ -303,11 +303,14 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		//Count cards
 		int numTrick = 0;
 		int numCom = 0;
-		int numSkill;
-		if(pesVersion==19) numSkill=39;
-		else if(pesVersion>19) numSkill=41;
-		else numSkill=28;
-        for(int jj=0;jj<numSkill;jj++)
+		int numSkill = 0;
+		bool isCaptain = false;
+		int freeCOMs = 0;
+		int totalSkills;
+		if(pesVersion==19) totalSkills =39;
+		else if(pesVersion>19) totalSkills =41;
+		else totalSkills =28;
+        for(int jj=0;jj< totalSkills;jj++)
         {
             if(player.play_skill[jj])
             {
@@ -315,14 +318,19 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				//Captain gets free captaincy card and stat bonus
 				if (jj == 25 && player.id == gteams[teamSel].players[gteams[teamSel].captain_ind])
 				{
-					cardMod++;
+					cardMod += 2;
 					targetRate += captainStatBonus;
+					isCaptain = true;
 				}
                 //Trick cards may be free, count number
                 if(jj<6 || jj == 9 || jj==16 || jj == 21 || jj==28 || jj==29 || jj==30 || jj==34)
 				{
                     hasTrick = true;
 					numTrick++;
+				}
+				else
+				{
+					numSkill++;
 				}
             }
         }
@@ -333,6 +341,13 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				cardCount++;
 				numCom++;
 			}
+		}
+
+		if (player.id == gteams[teamSel].players[gteams[teamSel].captain_ind] && !isCaptain)
+		{
+			cardMod++;
+			targetRate += captainStatBonus;
+			isCaptain = true;
 		}
 
 		if(player.age<15 || player.age>50)
@@ -377,15 +392,16 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				errorMsg << _T("Only 1 A position for non-medals;");
 			}
 
-			cardMod += regCOM; //1 free COM styles
+			cardMod += min(regCOM, numCom); //1 free COM styles
 			cardMod += min(trickCards, numTrick); //5 free tricks
 			cardLimit = regSkillCardsMax + cardMod; //5 skill cards
-            
-			if (numCom > regCOM)
+			freeCOMs = regCOM;
+
+			/*if (numCom > regCOM)
 			{
 				errorTot++;
 				errorMsg << _T("Has ") << numCom << _T(" COM playing styles, should be no more than ") << regCOM << _T("; ");
-			}
+			}*/
 
 			if (player.injury + 1 != regIR)
 			{
@@ -431,14 +447,15 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			}
 
             cardMod += min(trickCards, numTrick); //5 free tricks
-			cardMod += silverCOM; //3 free COM
+			cardMod += min(silverCOM, numCom); //3 free COM
 			cardLimit = medalSkillCardsMax + cardMod; //6 skill cards
+			freeCOMs = silverCOM;
 
-			if (numCom > silverCOM)
+			/*if (numCom > silverCOM)
 			{
 				errorTot++;
 				errorMsg << _T("Has ") << numCom << _T(" COM playing styles, should be no more than ") << silverCOM << _T("; ");
-			}
+			}*/
 
 			if(player.injury+1 != silverIR)
 			{
@@ -489,14 +506,15 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			}
 			
             cardMod += min(trickCards, numTrick); //5 free tricks
-			cardMod += goldCOM; //5 free COMs
+			cardMod += min(goldCOM, numCom); //5 free COMs
 			cardLimit = medalSkillCardsMax + cardMod; //6 skill cards
+			freeCOMs = goldCOM;
 
-			if (numCom > goldCOM)
+			/*if (numCom > goldCOM)
 			{
 				errorTot++;
 				errorMsg << _T("Has ") << numCom << _T(" COM playing styles, should be no more than ") << goldCOM << _T("; ");
-			}
+			}*/
             
 			if(player.injury+1 > goldIR)
 			{
@@ -543,6 +561,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		}
 		else
 		{
+			if (player.height >= heightGiant)
+			{
+				weakFoot = 2;
+			}
 			errorTot++;
 			errorMsg << _T("Illegal height (") << player.height << _T(" cm); ");
 		}
@@ -579,7 +601,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			errorMsg << _T("Has ") << cardCount - numCom << _T(" skill cards, PES limit is 10; ");
 		}
 
-		//Check PES skill card limit of 10
+		//Check COM hard cap
 		if (numCom > maxCOM)
 		{
 			errorTot++;

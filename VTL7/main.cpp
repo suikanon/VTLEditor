@@ -170,7 +170,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("VTLEditor /vt/ League 7 Edition"),
+		_T("VTL Unity Cup Editor 1.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -870,6 +870,18 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
 
+						wchar_t height[0x1000];
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_GETTEXT, (WPARAM)(sizeof(height) / sizeof(height[0])), (LPARAM)height);
+
+						int heightNum = wcstol(height, 0, 10);
+
+						if (heightNum == 191 || heightNum == 205 || heightNum == 196 || heightNum == 210)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
+						}
+
 						wchar_t oldName[0x1000];
 						wchar_t newName[0x1000];
 
@@ -894,6 +906,18 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+
+						wchar_t height[0x1000];
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_GETTEXT, (WPARAM)(sizeof(height) / sizeof(height[0])), (LPARAM)height);
+
+						int heightNum = wcstol(height, 0, 10);
+
+						if (heightNum == 191 || heightNum == 205 || heightNum == 194 || heightNum == 208 || heightNum == 196 || heightNum == 210)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
+						}
 
 						wchar_t oldName[0x1000];
 						wchar_t newName[0x1000];
@@ -923,6 +947,18 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+
+						wchar_t height[0x1000];
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_GETTEXT, (WPARAM)(sizeof(height) / sizeof(height[0])), (LPARAM)height);
+
+						int heightNum = wcstol(height, 0, 10);
+
+						if (heightNum == 191 || heightNum == 205 || heightNum == 198 || heightNum == 212)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
+						}
 					}
 				}
 				break;
