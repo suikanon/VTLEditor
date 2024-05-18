@@ -7,34 +7,9 @@
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 #include <mmsystem.h>
-
+#include <UxTheme.h>
 #include <dwmapi.h>
-//----------------------------------------------------------------------
-/*Function prototypes*/
-/*
-//Dialog procedures: (Now in window.h)
-LRESULT CALLBACK wnd_proc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK aatf_sing_dlg_proc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK aatf_mult_dlg_proc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK aatf_sel_dlg_proc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK aatf_comp_dlg_proc(HWND, UINT, WPARAM, LPARAM);
-//BOOL CALLBACK tab_two_dlg_proc(HWND, UINT, WPARAM, LPARAM);
 
-//Control procedures: (Now in window.h)
-LRESULT CALLBACK lv_cntl_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK cb_cntl_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK cb2_cntl_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK scale_cntl_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK scale_static_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK onto_tab_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK from_tab_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK tab_two_dlg_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-LRESULT CALLBACK tab_three_dlg_proc(HWND,UINT,WPARAM,LPARAM,UINT_PTR,DWORD_PTR);
-BOOL CALLBACK statDlgProc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK bumpDlgProc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK scale_children(HWND,LPARAM);
-BOOL CALLBACK draw_children(HWND,LPARAM);
-*/
 int loadDLL();
 void DoFileOpen(HWND, TCHAR* = NULL);
 void DoFileSave(HWND);
@@ -66,8 +41,6 @@ void bump_stats();
 void copy_stats();
 void set_boot_glove_ids();
 void swap_stats();
-//void setup_control(HWND,HFONT,SUBCLASSPROC); (Now in window.h)
-//void setup_combo(HWND,HFONT,SUBCLASSPROC);
 void common_shortcuts(WPARAM);
 void roster_data_output();
 void fix_database();
@@ -84,6 +57,7 @@ int SD_GetScrollPos(HWND hwnd, int bar, UINT code);
 char gc_ver4ccs[] = "20a";
 HINSTANCE ghinst;			//Main window instance
 HINSTANCE hPesDecryptDLL;	//Handle to libpesXcrypter.dll 
+HINSTANCE hUxtheme;			//REEEEEEEEEEEEEEEEEEEEEE
 HWND ghw_main;				//Handle to main window
 HWND ghw_tabcon, ghw_tab1, ghw_tab2, ghw_tab3;
 HFONT ghFont;
@@ -151,8 +125,12 @@ BOOL IsDarkModeEnabled()
 // Function to set the background color based on the dark mode setting
 HBRUSH GetBackgroundBrush()
 {
-    return IsDarkModeEnabled() ? CreateSolidBrush(RGB(23, 23, 23)) : (HBRUSH)(COLOR_WINDOW+1);
+    return IsDarkModeEnabled() ? CreateSolidBrush(RGB(30, 30, 30)) : (HBRUSH)(COLOR_WINDOW+1);
 }
+
+#define DARK_BACKGROUND_COLOR RGB(30, 30, 30)
+#define DARK_TEXT_COLOR RGB(255, 255, 255)
+#define DARK_TAB_COLOR RGB(45, 45, 45)
 
 int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 {
@@ -185,6 +163,8 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	int retval = loadDLL();
 	if(retval) return retval;
 
+	HMODULE hUxtheme = LoadLibraryExW(L"uxtheme.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
@@ -201,6 +181,13 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 		MessageBox(NULL, _T("Window Creation Failed!"), _T("Error!"),
 			MB_ICONEXCLAMATION | MB_OK);
 		return 0;
+	}
+	else
+	{
+		using TYPE_AllowDarkModeForWindow = bool (WINAPI*)(HWND a_HWND, bool a_Allow);
+		static const TYPE_AllowDarkModeForWindow AllowDarkModeForWindow = (TYPE_AllowDarkModeForWindow)GetProcAddress(hUxtheme, MAKEINTRESOURCEA(133));
+		AllowDarkModeForWindow(ghw_main, true);
+		SetWindowTheme(ghw_main, L"DarkMode_Explorer", NULL);
 	}
 
 	srand(time(NULL));
@@ -368,23 +355,26 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 			TCHAR szTabText[30];
 			HBRUSH hbr;
 			COLORREF bkColor;
+			COLORREF textColor;
+			if (IsDarkModeEnabled())
+			{
+				bkColor = RGB(30, 30, 30); // Dark background color
+				textColor = RGB(255, 255, 255); // White text color
+			}
+			else
+			{
+				bkColor = (COLORREF)GetSysColor(COLOR_3DFACE); // Default system color
+				textColor = RGB(0, 0, 0); // Black text color
+			}
+
+			hbr = (HBRUSH)CreateSolidBrush(bkColor);
+
+			FillRect(lpdis->hDC, &lpdis->rcItem, hbr);
+			SetBkColor(lpdis->hDC, bkColor);
+			SetTextColor(lpdis->hDC, textColor);
 
 			if (hTabCtrl == lpdis->hwndItem)   // is this the tab control?
 			{
-				COLORREF textColor;
-				if (IsDarkModeEnabled())
-				{
-					bkColor = RGB(23, 23, 23); // Dark background color
-					textColor = RGB(255, 255, 255); // White text color
-				}
-				else
-				{
-					bkColor = (COLORREF)GetSysColor(COLOR_3DFACE); // Default system color
-					textColor = RGB(0, 0, 0); // Black text color
-				}
-
-				hbr = (HBRUSH)CreateSolidBrush(bkColor);
-
 				memset(szTabText, '\0', sizeof(szTabText));
 				tci.mask = TCIF_TEXT;
 				tci.pszText = szTabText;
@@ -392,36 +382,35 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 				TabCtrl_GetItem(hTabCtrl, lpdis->itemID, &tci);
 
-				FillRect(lpdis->hDC, &lpdis->rcItem, hbr);
-				SetBkColor(lpdis->hDC, bkColor);
-				SetTextColor(lpdis->hDC, textColor);
-
-				//RECT rctext = lpdis->rcItem;
-				//rctext.top -= GetSystemMetrics(SM_CYEDGE);
-				//rctext.left += GetSystemMetrics(SM_CXEDGE);
-
-				//int test = TabCtrl_GetCurSel(hTabCtrl);
-
-				//TextOut(lpdis->hDC,rctext.left,rctext.top,tci.pszText,lstrlen(tci.pszText));
 				if( lpdis->itemID == TabCtrl_GetCurSel(hTabCtrl) )
 					DrawText(lpdis->hDC, tci.pszText, lstrlen(tci.pszText), &lpdis->rcItem, DT_SINGLELINE|DT_VCENTER|DT_CENTER);
 				else
 					DrawText(lpdis->hDC, tci.pszText, lstrlen(tci.pszText), &lpdis->rcItem, DT_SINGLELINE|DT_BOTTOM|DT_CENTER);
-
-				DeleteObject(hbr);
 			}
+
+			DeleteObject(hbr);
 		}
 		break;
+		case WM_CTLCOLORDLG:
 		case WM_CTLCOLORSTATIC:
-		{
+		case WM_CTLCOLORBTN:
+		case WM_CTLCOLORLISTBOX:
+		case WM_CTLCOLOREDIT:
+		case WM_CTLCOLORSCROLLBAR: {
 			if (IsDarkModeEnabled())
 			{
-				HDC hdcStatic = (HDC)W;
-				SetTextColor(hdcStatic, RGB(255, 255, 255)); // White text
-				SetBkColor(hdcStatic, RGB(23, 23, 23)); // Dark background
-				return (INT_PTR)GetBackgroundBrush();
+				HDC hdc = (HDC)W;
+				SetBkColor(hdc, RGB(30, 30, 30));
+				SetTextColor(hdc, RGB(255, 255, 255));
+				return (LRESULT)GetBackgroundBrush();
 			}
-			break;
+		}
+		case WM_ERASEBKGND: {
+			HDC hdc = (HDC)W;
+			RECT rect;
+			GetClientRect(H, &rect);
+			FillRect(hdc, &rect, GetBackgroundBrush());
+			return 1; // Indicate that background has been erased
 		}
 		break;
 		case WM_KEYDOWN:
@@ -716,7 +705,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 			//Delete icons, fonts and bitmaps
 			DeleteObject((HGDIOBJ)ghFont);
 			FreeLibrary(hPesDecryptDLL);
-
+			FreeLibrary(hUxtheme);
 			DestroyWindow(H);
 		break;
 		case WM_DESTROY:
@@ -3444,6 +3433,53 @@ LRESULT CALLBACK from_tab_proc(HWND H, UINT M, WPARAM W, LPARAM L,
 {
 	switch(M)
 	{
+		case WM_NOTIFY:
+		{
+			LPNMHDR pnmh = (LPNMHDR)L;
+			if (pnmh->code == NM_CUSTOMDRAW && pnmh->idFrom == IDC_TAB_MAIN) {
+				LPNMCUSTOMDRAW pnmcd = (LPNMCUSTOMDRAW)L;
+				switch (pnmcd->dwDrawStage) {
+				case CDDS_PREPAINT:
+					return CDRF_NOTIFYITEMDRAW;
+
+				case CDDS_ITEMPREPAINT: {
+					// Set tab background color
+					HBRUSH hbrBkgnd = CreateSolidBrush(DARK_TAB_COLOR);
+					FillRect(pnmcd->hdc, &pnmcd->rc, hbrBkgnd);
+					DeleteObject(hbrBkgnd);
+
+					// Set tab text color
+					SetTextColor(pnmcd->hdc, DARK_TEXT_COLOR);
+					SetBkMode(pnmcd->hdc, TRANSPARENT);
+					return CDRF_DODEFAULT;
+				}
+				}
+			}
+		}
+		break;
+		case WM_CTLCOLORDLG:
+		case WM_CTLCOLORSTATIC:
+		case WM_CTLCOLORBTN:
+		case WM_CTLCOLORLISTBOX:
+		case WM_CTLCOLOREDIT:
+		case WM_CTLCOLORSCROLLBAR: {
+			if (IsDarkModeEnabled())
+			{
+				HDC hdc = (HDC)W;
+				SetBkColor(hdc, RGB(30, 30, 30));
+				SetTextColor(hdc, RGB(255, 255, 255));
+				return (LRESULT)GetBackgroundBrush();
+			}
+		}
+		case WM_ERASEBKGND: {
+			HDC hdc = (HDC)W;
+			RECT rect;
+			GetClientRect(H, &rect);
+			FillRect(hdc, &rect, GetBackgroundBrush());
+			return 1; // Indicate that background has been erased
+		}
+		break;
+
 		case WM_KEYDOWN:
 		{
 			if( W==VK_TAB )

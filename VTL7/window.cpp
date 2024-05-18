@@ -2,6 +2,57 @@
 #include "resource.h"
 #include "editor.h"
 #include "window.h"
+#include <windows.h>
+#include <commctrl.h>
+
+#define DARK_BACKGROUND_COLOR RGB(30, 30, 30)
+#define DARK_TEXT_COLOR RGB(255, 255, 255)
+#define DARK_TAB_COLOR RGB(45, 45, 45)
+HBRUSH hbrBkgnd = NULL;
+
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+LRESULT CALLBACK CustomControlProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
+	HDC hdc;
+	switch (msg) {
+	case WM_DRAWITEM:
+	{
+		LPDRAWITEMSTRUCT lpdis = (LPDRAWITEMSTRUCT)lParam; // item drawing information
+		HWND hTabCtrl = GetDlgItem(hwnd, IDC_TAB_MAIN);
+		TCITEM tci;
+		TCHAR szTabText[30];
+		HBRUSH hbr;
+		COLORREF bkColor;
+		COLORREF textColor;
+		bkColor = RGB(30, 30, 30); // Dark background color
+		textColor = RGB(255, 255, 255); // White text color
+		hbr = (HBRUSH)CreateSolidBrush(bkColor);
+		FillRect(lpdis->hDC, &lpdis->rcItem, hbr);
+		SetBkColor(lpdis->hDC, bkColor);
+		SetTextColor(lpdis->hDC, textColor);
+		DeleteObject(hbr);
+	}
+	break;
+	case WM_CTLCOLORBTN:
+	case WM_CTLCOLORSTATIC:
+	case WM_CTLCOLORDLG:
+	case WM_CTLCOLORLISTBOX:
+	case WM_CTLCOLORSCROLLBAR:
+		hdc = (HDC)wParam;
+		SetBkColor(hdc, DARK_BACKGROUND_COLOR);
+		SetTextColor(hdc, DARK_TEXT_COLOR);
+		return (LRESULT)hbrBkgnd;
+
+	case WM_ERASEBKGND:
+		hdc = (HDC)wParam;
+		RECT rect;
+		GetClientRect(hwnd, &rect);
+		FillRect(hdc, &rect, hbrBkgnd);
+		return 1; // Indicate that background has been erased
+
+	default:
+		return DefSubclassProc(hwnd, msg, wParam, lParam);
+	}
+}
 
 void setup_main(HWND H)
 {
@@ -294,24 +345,6 @@ void setup_main(HWND H)
 
 	TabCtrl_SetCurSel(ghw_tabcon,0); //tab 1 visible by default
 }
-			
-			//Subclass controls inside basic dialog
-/*			chd_rect = new RECT;
-			GetWindowRect(ghw_basic, chd_rect);
-			MapWindowPoints(HWND_DESKTOP, GetParent(ghw_basic), (LPPOINT)chd_rect, 2);
-			SetWindowSubclass(ghw_basic, scale_cntl_proc, 0, (DWORD_PTR)chd_rect); */
-//			FILE * pFile;
-//			pFile = fopen ("myfile.txt","w");
-//			fprintf(pFile, "%d %d %d %d %d\r\n", IDD_BASIC, chd_rect->left, chd_rect->top, chd_rect->right-chd_rect->left, chd_rect->bottom-chd_rect->top);
-/*			for(ii=IDD_BASIC+1; ii<=IDC_PLAY_STYL; ii++)
-			{
-				hw_new = GetDlgItem(ghw_basic, ii);
-				chd_rect = new RECT;
-				GetWindowRect(hw_new, chd_rect);
-				MapWindowPoints(HWND_DESKTOP, GetParent(hw_new), (LPPOINT)chd_rect, 2);
-				SetWindowSubclass(hw_new, scale_cntl_proc, 0, (DWORD_PTR)chd_rect);
-//				fprintf(pFile, "%d %d %d %d %d\r\n", ii, chd_rect->left, chd_rect->top, chd_rect->right-chd_rect->left, chd_rect->bottom-chd_rect->top);
-			}*/
 			
 void setup_tab1(HWND H)
 {
@@ -1212,6 +1245,11 @@ void setup_tab1(HWND H)
 	SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("1"));
 	SendDlgItemMessage(ghw_tab1, IDC_ABIL_INJU, UDM_SETRANGE, 0, MAKELPARAM(4, 1));
 	SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
+
+	EnumChildWindows(ghw_tab1, [](HWND hwnd, LPARAM lParam) -> BOOL {
+		SetWindowSubclass(hwnd, CustomControlProc, 0, 0);
+		return TRUE;
+		}, 0);
 }
 
 void setup_tab2(HWND H)

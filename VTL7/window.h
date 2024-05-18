@@ -12,7 +12,8 @@
 #include <time.h> 
 #include <math.h> 
 //#include <errno.h>
-//#include <Uxtheme.h>
+#include <uxtheme.h>
+#include <commctrl.h>
 
 //Set to use "Modern" visual style for windows controls:
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
@@ -43,6 +44,7 @@ BOOL CALLBACK swapDlgProc(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK bogloDlgProc(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK scale_children(HWND,LPARAM);
 BOOL CALLBACK draw_children(HWND,LPARAM);
+LRESULT CALLBACK CustomControlProc(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR);
 
 //Helper functions
 void setup_control(HWND,HFONT,SUBCLASSPROC);
