@@ -136,6 +136,24 @@ pf_encryptWithKeyNew encryptWithKeyNew;
 #define DWMWA_USE_IMMERSIVE_DARK_MODE 20
 #endif
 
+BOOL IsDarkModeEnabled()
+{
+	DWORD type = REG_DWORD;
+	DWORD value = 0;
+	DWORD valueSize = sizeof(value);
+	if (RegGetValue(HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"), _T("AppsUseLightTheme"), RRF_RT_REG_DWORD, &type, &value, &valueSize) == ERROR_SUCCESS)
+	{
+		return value == 0;
+	}
+	return TRUE; // Default to dark mode if unable to read the registry
+}
+
+// Function to set the background color based on the dark mode setting
+HBRUSH GetBackgroundBrush()
+{
+    return IsDarkModeEnabled() ? CreateSolidBrush(RGB(23, 23, 23)) : (HBRUSH)(COLOR_WINDOW+1);
+}
+
 int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 {
 	ghinst = I; //Global handle to the program instance
@@ -151,7 +169,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	wc.hInstance	 = I;
 	wc.hIcon		 = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hCursor		 = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)(COLOR_MENU+1);
+	wc.hbrBackground = GetBackgroundBrush();
 	wc.lpszMenuName  = MAKEINTRESOURCE(IDR_MAINMENU);
 	wc.lpszClassName = _T("4cc_app");
 	wc.hIconSm		 = LoadIcon(NULL, IDI_APPLICATION);
@@ -353,9 +371,20 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 			if (hTabCtrl == lpdis->hwndItem)   // is this the tab control?
 			{
-				bkColor = (COLORREF)GetSysColor(COLOR_3DFACE);
+				COLORREF textColor;
+				if (IsDarkModeEnabled())
+				{
+					bkColor = RGB(23, 23, 23); // Dark background color
+					textColor = RGB(255, 255, 255); // White text color
+				}
+				else
+				{
+					bkColor = (COLORREF)GetSysColor(COLOR_3DFACE); // Default system color
+					textColor = RGB(0, 0, 0); // Black text color
+				}
+
 				hbr = (HBRUSH)CreateSolidBrush(bkColor);
-			
+
 				memset(szTabText, '\0', sizeof(szTabText));
 				tci.mask = TCIF_TEXT;
 				tci.pszText = szTabText;
@@ -365,6 +394,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 				FillRect(lpdis->hDC, &lpdis->rcItem, hbr);
 				SetBkColor(lpdis->hDC, bkColor);
+				SetTextColor(lpdis->hDC, textColor);
 
 				//RECT rctext = lpdis->rcItem;
 				//rctext.top -= GetSystemMetrics(SM_CYEDGE);
@@ -380,6 +410,18 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 				DeleteObject(hbr);
 			}
+		}
+		break;
+		case WM_CTLCOLORSTATIC:
+		{
+			if (IsDarkModeEnabled())
+			{
+				HDC hdcStatic = (HDC)W;
+				SetTextColor(hdcStatic, RGB(255, 255, 255)); // White text
+				SetBkColor(hdcStatic, RGB(23, 23, 23)); // Dark background
+				return (INT_PTR)GetBackgroundBrush();
+			}
+			break;
 		}
 		break;
 		case WM_KEYDOWN:
