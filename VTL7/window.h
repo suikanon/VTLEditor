@@ -15,10 +15,10 @@
 #include <uxtheme.h>
 #include <commctrl.h>
 
-//Set to use "Modern" visual style for windows controls:
+/*Set to use "Modern" visual style for windows controls: AND COMPLETELY DISABLE THE ABILITY TO CHANGE THE BLOODY COLOR RADIO BUTTONS AND CHECKBOXES
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
-processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")*/
 
 //Dialog procedures:
 LRESULT CALLBACK wnd_proc(HWND, UINT, WPARAM, LPARAM);
