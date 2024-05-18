@@ -10,50 +10,6 @@
 #define DARK_TAB_COLOR RGB(45, 45, 45)
 HBRUSH hbrBkgnd = NULL;
 
-//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-LRESULT CALLBACK CustomControlProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
-	HDC hdc;
-	switch (msg) {
-	case WM_DRAWITEM:
-	{
-		LPDRAWITEMSTRUCT lpdis = (LPDRAWITEMSTRUCT)lParam; // item drawing information
-		HWND hTabCtrl = GetDlgItem(hwnd, IDC_TAB_MAIN);
-		TCITEM tci;
-		TCHAR szTabText[30];
-		HBRUSH hbr;
-		COLORREF bkColor;
-		COLORREF textColor;
-		bkColor = RGB(30, 30, 30); // Dark background color
-		textColor = RGB(255, 255, 255); // White text color
-		hbr = (HBRUSH)CreateSolidBrush(bkColor);
-		FillRect(lpdis->hDC, &lpdis->rcItem, hbr);
-		SetBkColor(lpdis->hDC, bkColor);
-		SetTextColor(lpdis->hDC, textColor);
-		DeleteObject(hbr);
-	}
-	break;
-	case WM_CTLCOLORBTN:
-	case WM_CTLCOLORSTATIC:
-	case WM_CTLCOLORDLG:
-	case WM_CTLCOLORLISTBOX:
-	case WM_CTLCOLORSCROLLBAR:
-		hdc = (HDC)wParam;
-		SetBkColor(hdc, DARK_BACKGROUND_COLOR);
-		SetTextColor(hdc, DARK_TEXT_COLOR);
-		return (LRESULT)hbrBkgnd;
-
-	case WM_ERASEBKGND:
-		hdc = (HDC)wParam;
-		RECT rect;
-		GetClientRect(hwnd, &rect);
-		FillRect(hdc, &rect, hbrBkgnd);
-		return 1; // Indicate that background has been erased
-
-	default:
-		return DefSubclassProc(hwnd, msg, wParam, lParam);
-	}
-}
-
 void setup_main(HWND H)
 {
 	HWND hw_new, hw_bud;
@@ -1245,11 +1201,6 @@ void setup_tab1(HWND H)
 	SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("1"));
 	SendDlgItemMessage(ghw_tab1, IDC_ABIL_INJU, UDM_SETRANGE, 0, MAKELPARAM(4, 1));
 	SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
-
-	EnumChildWindows(ghw_tab1, [](HWND hwnd, LPARAM lParam) -> BOOL {
-		SetWindowSubclass(hwnd, CustomControlProc, 0, 0);
-		return TRUE;
-		}, 0);
 }
 
 void setup_tab2(HWND H)
