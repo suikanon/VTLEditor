@@ -698,17 +698,22 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		errorMsg << _T("Has ") << player.play_pos[12];GK*/
 
 		int cardsSwappedForAPositions = countA - freeAPositions;
+		bool usingNMWMFAPos = confirmedNMWMFBuff && (
+			(player.reg_pos == 6 && player.play_pos[2] == 2) ||
+			(player.reg_pos == 7 && player.play_pos[3] == 2) ||
+			(player.reg_pos == 9 && player.play_pos[7] == 2) ||
+			(player.reg_pos == 10 && player.play_pos[8] == 2)
+			);
+
+		if (usingNMWMFAPos)
+		{
+			cardsSwappedForAPositions--;
+		}
 
 		if (countA > freeAPositions + cardLimit - cardCount)
 		{
-			if (confirmedNMWMFBuff && ( 
-				(player.reg_pos == 6 && player.play_pos[2] == 2) ||
-				(player.reg_pos == 7 && player.play_pos[3] == 2) ||
-				(player.reg_pos == 9 && player.play_pos[7] == 2) ||
-				(player.reg_pos == 10 && player.play_pos[8] == 2) 
-				))
+			if (usingNMWMFAPos)
 			{
-				cardsSwappedForAPositions++;
 				if (countA > freeAPositions + cardLimit - cardCount + 1)
 				{
 					errorTot++;
@@ -727,15 +732,27 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			}
 		}
 
-		if (player.reg_pos == 0)
+		if (player.reg_pos == 0 || cardsSwappedForAPositions < 0)
 		{
 			cardsSwappedForAPositions = 0;
 		}
 
-		if (cardCount - numCom < cardMin - cardsSwappedForAPositions)
+
+		/*errorMsg << _T("Has ") << cardCount;
+		errorMsg << _T("\r\n");
+		errorMsg << _T("Has ") << min(freeCOMs, numCom);
+		errorMsg << _T("\r\n");
+		errorMsg << _T("Has ") << numTrick;
+		errorMsg << _T("\r\n");
+		errorMsg << _T("Has ") << cardMin;
+		errorMsg << _T("\r\n");
+		errorMsg << _T("Has ") << cardsSwappedForAPositions;
+		errorMsg << _T("\r\n");*/
+
+		if (cardCount - min(freeCOMs, numCom) - numTrick < cardMin - cardsSwappedForAPositions)
 		{
 			errorTot++;
-			errorMsg << _T("Has ") << cardCount - numCom << _T(" skill cards, must have at least ") << cardMin << _T("; ");
+			errorMsg << _T("Has ") << cardCount - min(freeCOMs, numCom) - numTrick << _T(" skill cards, must have at least ") << cardMin - cardsSwappedForAPositions << _T("; ");
 		}
 
 		//Check PES skill card limit of 10
