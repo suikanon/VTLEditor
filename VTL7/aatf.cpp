@@ -710,14 +710,14 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			cardsSwappedForAPositions--;
 		}
 
-		if (countA > freeAPositions + cardLimit - cardCount)
+		if (countA > freeAPositions + max(0, cardLimit - cardCount))
 		{
 			if (usingNMWMFAPos)
 			{
-				if (countA > freeAPositions + cardLimit - cardCount + 1)
+				if (countA > freeAPositions + max(0, cardLimit - cardCount) + 1)
 				{
 					errorTot++;
-					errorMsg << _T("Has ") << countA << _T(" A positions, only allowed ") << freeAPositions + cardLimit - cardCount + 1 << _T(". Remove cards to add A position slots; ");
+					errorMsg << _T("Has ") << countA << _T(" A positions, only allowed ") << freeAPositions + max(0, cardLimit - cardCount) + 1 << _T(". Remove cards to add A position slots; ");
 				}
 				if (player.play_pos[9] == 2 || player.play_pos[10] == 2 || player.play_pos[11] == 2)
 				{
@@ -725,10 +725,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 					errorMsg << _T("No LB, CB or RB A positions for buffed LWF, RWF, LMF, RMF non-medals; ");
 				}
 			}
-			else if (countA > freeAPositions + cardLimit - cardCount)
+			else if (countA > freeAPositions + max(0, cardLimit - cardCount))
 			{
 				errorTot++;
-				errorMsg << _T("Has ") << countA << _T(" A positions, only allowed ") << freeAPositions + cardLimit - cardCount << _T(". Remove cards to add A position slots; ");
+				errorMsg << _T("Has ") << countA << _T(" A positions, only allowed ") << freeAPositions + max(0, cardLimit - cardCount) << _T(". Remove cards to add A position slots; ");
 			}
 		}
 
@@ -894,7 +894,6 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
         if(player.def != targetRate + BEDBKBonus + DPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate << _T("; ") << BEDBKBonus << _T("; ") << DPBonus  << _T("; ");
 			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate + BEDBKBonus + DPBonus << _T("; ");
         }
 		if(pesVersion>19 && player.tight_pos != targetRate)
