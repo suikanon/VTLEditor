@@ -411,6 +411,12 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 			GCCRBonus += nmGCCR;
 
+			if (player.play_style == 9)
+			{
+				errorTot++;
+				errorMsg << _T("Regulars can't use \"The Destroyer\" playing style; ");
+			}
+
             if(player.form+1 != regForm)
 			{
                 errorTot++;
@@ -586,6 +592,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int debuffedModHeight = player.height - heightMod + regWMFHeightBonus;
 		int confirmedNMWMFBuff = false;
 
+		
 		//Check player height
 		if (neutralModHeight == heightManlet || (NMWMFBuffed && debuffedModHeight == heightManlet))
 		{
@@ -988,7 +995,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	if (numNMWMFBuffed < maxNumNMWMFBuffed && numNMWMFBuffed < numNMWMFBuffEligible)
 	{
 		errorTot += numNMWMFBuffEligible - numNMWMFBuffed;
-		errorMsg << _T("Has ") << numNMWMFBuffed << _T("/") << maxNumNMWMFBuffed << _T(" buffed LWF, RWF, LMF, RMF non-medals, missing ") << numNMWMFBuffEligible - numNMWMFBuffed << _T(" buffed non-medals");
+		errorMsg << _T("Has ") << numNMWMFBuffed << _T("/") << maxNumNMWMFBuffed << _T(" buffed LWF, RWF, LMF, RMF non-medals, missing ") << numNMWMFBuffEligible - numNMWMFBuffed << _T(" buffed non-medals. Check the height or stats of LWF, RWF, LMF, RMF non-medals.");
 	}
   //  else //Using Red height system
   //  {
