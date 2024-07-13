@@ -28,21 +28,25 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int numNMWMFBuffEligible = 0;
 
 	int regWMFStatBonus = 6;
-	int silverWFStatBonus = 3;
+	int silverWFStatBonus = 0;
 	int captainStatBonus = 2;
 
+	int nmSilverSFBonus = 5;
+	int nmSilverBEDBKBonus = 5;
+
 	int regWMFHeightBonus = 7;
-	int silverWFHeightBonus = 3;
+	int silverWFHeightBonus = 0;
 	int medalCFTFHeightBonus = 5;
 	int medalCFTFootedness = 4;
+	int medalCFTHeightBonus = 5;
 
-	int gigaFootedness = 1;
-	int giantFootedness = 2;
+	int gigaFootedness = 2;
+	int giantFootedness = 3;
 
-	int goldRate = 96;
-	int silverRate = 87;
-	int regRate = 78;
-	int gkRate = 78;
+	int goldRate = 97;
+	int silverRate = 88;
+	int regRate = 77;
+	int gkRate = 77;
 	int reqNumGold = 2;
 	int reqNumSilver = 2;
 
@@ -54,8 +58,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int silverIR = 1;
 	int regIR = 1;
 
-	int silverDP = 2;
-	int nmGCCR = 6;
+	int silverDP = 0;
+	int nmGCCR = 0;
+	int nmGCR = 3;
 
 	int freeAPositions = 2;
 
@@ -90,6 +95,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int manletBonus0 = 5;
 	int manletBonus1 = 3;
 	int tallBonus = 3;
+	int tallFDBonus = 5;
 	int silverManletBonus = 0;
 	int goldManletBonus = 0;
 	int silverGiantPen = 0;
@@ -183,7 +189,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int weakFoot = 2;
         bool hasTrick = false;
 		int targetRate = 0;
-		int rating = player.drib;
+		int rating = player.cover;
         /*rating = max(player.gk, rating);
         rating = max(player.finish, rating);
         rating = max(player.lowpass, rating);
@@ -343,7 +349,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int BEDBKBonus = 0;
 		int DPBonus = 0;
 		int GCCRBonus = 0;
+		int GCRBonus = 0;
 		int FBonus = 0;
+		int FDBonus = 0;
 
 		if(pesVersion==19) totalSkills =39;
 		else if(pesVersion>19) totalSkills =41;
@@ -410,6 +418,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			weakFoot = 4;
 
 			GCCRBonus += nmGCCR;
+			GCRBonus += nmGCR;
 
 			if (player.play_style == 9)
 			{
@@ -520,14 +529,14 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				targetRate += silverWFStatBonus;
 			}
 
-			if (player.reg_pos == 12 && (player.play_style == 3 || player.play_style == 13))
+			/*if (player.reg_pos == 12 && (player.play_style == 3 || player.play_style == 13))
 			{
 				heightMod += medalCFTFHeightBonus;
 				if (player.play_style == 13)
 				{
 					medalCFTBuff = true;
 				}
-			}
+			}*/
         }
 		/* GOLD */
         else //rating == 97 //Gold player
@@ -578,9 +587,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				errorMsg << _T("Injury resist is ") << player.injury+1 << _T(", should be ") << goldIR << _T("; ");
 			}
 
-			if (player.reg_pos == 12 && (player.play_style == 3 || player.play_style == 13))
+			if (player.reg_pos == 12 && player.play_style == 13)
 			{
-				heightMod += medalCFTFHeightBonus;
+				heightMod += medalCFTHeightBonus;
 				if (player.play_style == 13)
 				{
 					medalCFTBuff = true;
@@ -602,33 +611,45 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			
 			if (!isGold)
 			{
-				SFBonus = 3;
-				BEDBKBonus = 5;
+				SFBonus = nmSilverSFBonus;
+				BEDBKBonus = nmSilverBEDBKBonus;
 			}
 		}
 		else if (neutralModHeight == heightTall || (NMWMFBuffed && debuffedModHeight == heightTall))
 		{
 			numTall++;
 			cardLimit += tallCardBonus; //Talls get one bonus card
+
+			if (!isGold && !isSilver)
+			{
+				FDBonus = tallFDBonus;
+			}
+
 			if (player.reg_pos == 0)
 			{
 				errorTot++;
 				errorMsg << _T("GK in the ") << heightTall << _T(" cm bracket should have their height increased to ") << heightTallGK << _T(" cm; ");
 			}
 			if (NMWMFBuffed && neutralModHeight == heightTall) { numNMWMFBuffed++; confirmedNMWMFBuff = true;	}
-			if (!isGold && !isSilver)
+			/*if (!isGold && !isSilver)
 			{
 				FBonus = 3;
-			}
+			}*/
 		}
 		else if (neutralModHeight == heightTallGK && player.reg_pos == 0) //GK
 		{
 			numTall++;
 			cardLimit += tallCardBonus; //Talls get one bonus card
+
 			if (!isGold && !isSilver)
 			{
-				FBonus = 3;
+				FDBonus = tallFDBonus;
 			}
+
+			/*if (!isGold && !isSilver)
+			{
+				FBonus = 3;
+			}*/
 		}
 		else if (neutralModHeight == heightGiant || (NMWMFBuffed && debuffedModHeight == heightGiant))
 		{
@@ -788,20 +809,20 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		}
 
 		//Check individual skill ratings
-		if(player.drib != targetRate)
+		if(player.drib != targetRate + FDBonus)
         {
             errorTot++;
-			errorMsg << _T("Dribbling is ") << player.drib << _T(", should be ") << targetRate << _T("; ");
+			errorMsg << _T("Dribbling is ") << player.drib << _T(", should be ") << targetRate + FDBonus << _T("; ");
         }
-        if(player.gk != targetRate + GCCRBonus)
+        if(player.gk != targetRate + GCCRBonus + GCRBonus)
         {
             errorTot++;
-			errorMsg << _T("Goalkeeping is ") << player.gk << _T(", should be ") << targetRate + GCCRBonus << _T("; ");
+			errorMsg << _T("Goalkeeping is ") << player.gk << _T(", should be ") << targetRate + GCCRBonus + GCRBonus << _T("; ");
         }
-        if(player.finish != targetRate + SFBonus + FBonus)
+        if(player.finish != targetRate + SFBonus + FBonus + FDBonus)
 		{
             errorTot++;
-			errorMsg << _T("Finishing is ") << player.finish << _T(", should be ") << targetRate + SFBonus + FBonus << _T("; ");
+			errorMsg << _T("Finishing is ") << player.finish << _T(", should be ") << targetRate + SFBonus + FBonus + FDBonus << _T("; ");
         }
         if(player.lowpass != targetRate)
 		{
@@ -823,15 +844,15 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Swerve is ") << player.swerve << _T(", should be ") << targetRate << _T("; ");
         }
-        if(player.catching != targetRate + GCCRBonus)
+        if(player.catching != targetRate + GCCRBonus + GCRBonus)
 		{
             errorTot++;
-			errorMsg << _T("Catching is ") << player.catching << _T(", should be ") << targetRate + GCCRBonus << _T("; ");
+			errorMsg << _T("Catching is ") << player.catching << _T(", should be ") << targetRate + GCCRBonus + GCRBonus << _T("; ");
         }
-        if(player.clearing != targetRate + GCCRBonus)
+        if(player.clearing != targetRate + GCCRBonus + GCRBonus)
 		{
             errorTot++;
-			errorMsg << _T("Clearing is ") << player.clearing << _T(", should be ") << targetRate + GCCRBonus << _T("; ");
+			errorMsg << _T("Clearing is ") << player.clearing << _T(", should be ") << targetRate + GCCRBonus + GCRBonus << _T("; ");
         }
         if(player.reflex != targetRate + GCCRBonus)
 		{
