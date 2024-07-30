@@ -170,7 +170,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("VTL7 Friendlies Editor 1.0"),
+		_T("VTL7 Preseason Editor 1.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -864,7 +864,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					{
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("96"));
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("98"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
@@ -876,17 +876,17 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);
 
-						if (heightNum == 191 || heightNum == 196)
+						/*if (heightNum == 187 || heightNum == 194)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("3"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("3"));
+						}
+
+						if (heightNum == 200 || heightNum == 207)
 						{
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
-						}
-
-						if (heightNum == 205 || heightNum == 210)
-						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("1"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("1"));
-						}
+						}*/
 
 						wchar_t oldName[0x1000];
 						wchar_t newName[0x1000];
@@ -907,13 +907,13 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					{
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("87"));
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("90"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
 
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("89"));
+						//SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("89"));
 
 						wchar_t height[0x1000];
 
@@ -921,28 +921,22 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);
 
-						if (heightNum == 205 || heightNum == 208 || heightNum == 210)
-						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("1"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("1"));
-						}
-
-						if (heightNum == 191 || heightNum == 194 || heightNum == 196)
+						/*if (heightNum == 200)
 						{
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
 						}
 
-						if (heightNum == 171 || heightNum == 174 || heightNum == 176)
+						if (heightNum == 187)
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BCON, WM_SETTEXT, 0, (LPARAM)_T("92"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("92"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("94"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BWIN, WM_SETTEXT, 0, (LPARAM)_T("92"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_KPOW, WM_SETTEXT, 0, (LPARAM)_T("92"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("3"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("3"));
+						}*/
 
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("90"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("90"));
+						if (heightNum == 180)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("95"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("95"));
 						}
 
 						wchar_t oldName[0x1000];
@@ -963,16 +957,6 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 				{
 					if(HIWORD(W)==BN_CLICKED)
 					{
-						int ii;
-						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							if(ii==IDT_ABIL_GOAL || ii==IDT_ABIL_CATC || ii == IDT_ABIL_CLEA || ii == IDT_ABIL_REFL) //Buff goalkeeping, catching, clearing and reflexes to 84
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("84"));
-							else
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("78"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("4"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
 
 
 						wchar_t height[0x1000];
@@ -981,33 +965,81 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);
 
-						if (heightNum == 191 || heightNum == 198)
+						if ((
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 6, 0) ||
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 7, 0) ||
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 9, 0) ||
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 10, 0)
+							) && (heightNum == 181 || heightNum == 186 || heightNum == 193 || heightNum == 206))
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
+							int ii;
+							for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC || ii == IDT_ABIL_COVE) //Buff goalkeeping, catching, clearing to 83
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("81"));
+								else if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_SWER || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("93"));
+								else
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("84"));
+						}
+						else
+						{
+							int ii;
+							for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC  || ii == IDT_ABIL_COVE) //Buff goalkeeping, catching, clearing to 83
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
+								else if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_SWER || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("89"));
+								else
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("80"));
+						}
+						
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("4"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+
+						/*if (heightNum == 191 || heightNum == 198)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("3"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("3"));
 						}
 
 						if (heightNum == 205  || heightNum == 210)
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("1"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("1"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
+						}*/
+
+						if (heightNum == 175)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BCON, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_KPOW, WM_SETTEXT, 0, (LPARAM)_T("86"));
+
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("95"));
+						}
+						if (heightNum == 181)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BCON, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_KPOW, WM_SETTEXT, 0, (LPARAM)_T("90"));
+
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("99"));
 						}
 
-						if (heightNum == 171 || heightNum == 178)
+						if (heightNum == 180)
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BCON, WM_SETTEXT, 0, (LPARAM)_T("83"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("83"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("83"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BWIN, WM_SETTEXT, 0, (LPARAM)_T("83"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_KPOW, WM_SETTEXT, 0, (LPARAM)_T("83"));
-
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("81"));
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("81"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("94"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("85"));
 						}
-
-						if (heightNum == 181 || heightNum == 185 || heightNum == 187)
+						if (heightNum == 186)
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("81"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("98"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("89"));
 						}
 					}
 				}
