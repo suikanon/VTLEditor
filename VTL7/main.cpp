@@ -170,7 +170,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("VTL7 Preseason Editor 1.0"),
+		_T("VTL7 Editor 1.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -894,7 +894,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
 
 						newName[0] = 0;
-						wcscat(newName, L"c51bbc4ff");
+						wcscat(newName, L"ccc9900ff");
 						wcscat(newName, oldName);
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
@@ -945,7 +945,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
 
 						newName[0] = 0;
-						wcscat(newName, L"cccccccff");
+						wcscat(newName, L"c51bbc4ff");
 
 						wcscat(newName, oldName);
 
