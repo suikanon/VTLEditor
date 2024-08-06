@@ -894,7 +894,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
 
 						newName[0] = 0;
-						wcscat(newName, L"ccc9900ff");
+						wcscat(newName, L"c51bbc4ff");
 						wcscat(newName, oldName);
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
@@ -974,10 +974,12 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						{
 							int ii;
 							for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
-								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC || ii == IDT_ABIL_COVE) //Buff goalkeeping, catching, clearing to 83
+								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC || ii == IDT_ABIL_COVE)
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("81"));
 								else if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_SWER || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT)
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("93"));
+								else if (ii == IDT_ABIL_DEFP || ii == IDT_ABIL_BODB)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("86"));
 								else
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("84"));
 						}
@@ -985,10 +987,12 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						{
 							int ii;
 							for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
-								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC  || ii == IDT_ABIL_COVE) //Buff goalkeeping, catching, clearing to 83
+								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC  || ii == IDT_ABIL_COVE)
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
 								else if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_SWER || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT)
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("89"));
+								else if (ii == IDT_ABIL_DEFP || ii == IDT_ABIL_BODB)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
 								else
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("80"));
 						}

@@ -63,6 +63,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int nmGCR = 0;
 	int nmOSFLL = 12;
 	int nmBase = 3;
+	int nmBCDP = 5;
 
 	int freeAPositions = 2;
 
@@ -356,6 +357,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int FDBonus = 0;
 		int OSFLLBonus = 0;
 		int baseBonus = 0;
+		int BCDPBonus = 0;
 
 		if(pesVersion==19) totalSkills =39;
 		else if(pesVersion>19) totalSkills =41;
@@ -425,6 +427,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			GCRBonus += nmGCR;
 			baseBonus += nmBase;
 			OSFLLBonus += nmOSFLL;
+			BCDPBonus += nmBCDP;
 
 			if (isCaptain)
 			{
@@ -881,10 +884,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Reflexes is ") << player.reflex << _T(", should be ") << targetRate + GCCRBonus + baseBonus << _T("; ");
         }
-        if(player.body_ctrl != targetRate + baseBonus)
+        if(player.body_ctrl != targetRate + BCDPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Body Control is ") << player.body_ctrl << _T(", should be ") << targetRate + baseBonus << _T("; ");
+			errorMsg << _T("Body Control is ") << player.body_ctrl << _T(", should be ") << targetRate + BCDPBonus << _T("; ");
         }
         if(player.phys_cont != targetRate && pesVersion!=16) //Not in 16
 		{
@@ -941,10 +944,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Attacking Prowess is ") << player.atk << _T(", should be ") << targetRate + OSFLLBonus << _T("; ");
         }
-        if(player.def != targetRate + DPBonus + baseBonus)
+        if(player.def != targetRate + DPBonus + BCDPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate + DPBonus + baseBonus << _T("; ");
+			errorMsg << _T("Defensive Prowess is ") << player.def << _T(", should be ") << targetRate + DPBonus + BCDPBonus << _T("; ");
         }
 		if(pesVersion>19 && player.tight_pos != targetRate)
 		{
