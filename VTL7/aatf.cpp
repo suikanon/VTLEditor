@@ -38,7 +38,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int silverWFHeightBonus = 0;
 	int medalCFTFHeightBonus = 5;
 	int medalCFTFootedness = 4;
-	int medalCFTHeightBonus = 5;
+	int medalCFTHeightBonus = 7;
 
 	int gigaFootedness = 4;
 	int giantFootedness = 4;
