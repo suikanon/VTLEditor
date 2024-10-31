@@ -423,75 +423,75 @@ void setup_tab1(HWND H)
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_CF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_CF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_SS, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_SS, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 2, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_LWF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 2, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_LWF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 3, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_RWF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 3, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_RWF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 4, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_AMF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 4, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_AMF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 5, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_LMF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 5, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_LMF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 6, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_RMF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 6, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_RMF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 7, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_CMF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 7, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_CMF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 8, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_DMF, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 8, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_DMF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 9, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_LB, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 9, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_LB, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 10, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_RB, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 10, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_RB, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		x1, y1 + ydiff * 11, xc, 19, ghw_tab1, (HMENU)IDS_PLAY_CB, GetModuleHandle(NULL), NULL);
+		x1 - 38, y1 + ydiff * 11, 2 * (xc - 9), 19, ghw_tab1, (HMENU)IDS_PLAY_CB, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(1, 2));
+	SendMessage(hw_new, TBM_SETRANGE, (WPARAM)TRUE, (LPARAM)MAKELONG(0, 2));
 
 	hw_new = CreateWindowEx(NULL, _T("msctls_trackbar32"), _T(""),
 		TBS_TOP | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
@@ -719,7 +719,7 @@ void setup_tab1(HWND H)
 		x1, y1+ydiff*10, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_HEEL, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("First-time Shot"), 
+	hw_new = CreateWindowEx(0, _T("Button"), _T("First-time Shot*"), 
 		BS_AUTOCHECKBOX | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 
 		x1, y1+ydiff*11, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_FIRS, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
