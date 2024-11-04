@@ -878,7 +878,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);*/
 
-						SendDlgItemMessage(ghw_tab1, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
 
 						/*if (heightNum == 187 || heightNum == 194)
 						{
@@ -928,7 +928,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10); */
 
-						SendDlgItemMessage(ghw_tab1, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
 
 						/*if (heightNum == 200)
 						{
@@ -974,7 +974,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10); */
 
-						SendDlgItemMessage(ghw_tab1, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
 						int ii;
 						for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
 							if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT || ii == IDT_ABIL_BCON || ii == IDT_ABIL_KPOW)
