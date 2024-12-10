@@ -423,7 +423,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				if (jj == 23 && (player.play_pos[0] == 2 || player.play_pos[4] == 2 || player.play_pos[6] == 2 || player.play_pos[11] == 2 || player.play_pos[10] == 2))
 				{
 					errorTot++;
-					errorMsg << _T("Can't use Track Back card with A positions in CF, AMF, or CMF; ");
+					errorMsg << _T("Can't use Track Back card with A positions in CF, AMF, CMF, LB or RB; ");
 				}
             }
         }
@@ -475,6 +475,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			baseBonus += nmBase;
 			//OFLLBKBonus += nmOFLLBK;
 
+			FBonus += nmF;
 			OPBonus += nmOP;
 			LWPBonus += nmLWP;
 			LOPBonus += nmLOP;
