@@ -43,7 +43,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int gigaFootedness = 4;
 	int giantFootedness = 4;
 
-	int goldRate = 98;
+	int goldRate = 97;
 	int silverRate = 92;
 	int regRate = 77;
 	int gkRate = 77;
@@ -59,11 +59,20 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int regIR = 1;
 
 	int silverDP = 0;
-	int silverS = -4;
-	int goldS = -5;
+	int silverST = -4;
+	int silverS = -6;
+	int goldS = -6;
+	int goldEP = -2;
 	int nmGCCR = 0;
 	int nmGCR = 0;
-	int nmOFLLBK = 10;
+	int nmOFLLBK = 0;
+	int nmOP = 13;
+	int nmF = 11;
+	int nmLWP = 11;
+	int nmLOP = 11;
+	int nmBC = 11;
+	int nmKP = 11;
+	int nmDP = 4;
 	int nmBase = 0;
 	int nmBCDP = 0;
 
@@ -85,7 +94,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 	int gk = 2;
 
-	int allowedHeight = 185;
+	int allowedHeight = 187;
 
 	/*int giga = 2;
 	int giant = 7;
@@ -372,10 +381,17 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int GCRBonus = 0;
 		int FBonus = 0;
 		int FDBonus = 0;
-		int OFLLBKBonus = 0;
+		//int OFLLBKBonus = 0;
 		int baseBonus = 0;
 		int BCDPBonus = 0;
 		int SBonus = 0;
+		int OPBonus = 0;
+		int LWPBonus = 0;
+		int LOPBonus = 0;
+		int BCBonus = 0;
+		int KPBonus = 0;
+		int STBonus = 0;
+		int EPBonus = 0;
 
 		if(pesVersion==19) totalSkills =39;
 		else if(pesVersion>19) totalSkills =41;
@@ -404,7 +420,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				}
 
 				//Track Back not allowed with CF, AMF or CMF
-				if (jj == 23 && (player.play_pos[0] == 2 || player.play_pos[4] == 2 || player.play_pos[6] == 2))
+				if (jj == 23 && (player.play_pos[0] == 2 || player.play_pos[4] == 2 || player.play_pos[6] == 2 || player.play_pos[11] == 2 || player.play_pos[10] == 2))
 				{
 					errorTot++;
 					errorMsg << _T("Can't use Track Back card with A positions in CF, AMF, or CMF; ");
@@ -457,8 +473,14 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			GCCRBonus += nmGCCR;
 			GCRBonus += nmGCR;
 			baseBonus += nmBase;
-			OFLLBKBonus += nmOFLLBK;
-			BCDPBonus += nmBCDP;
+			//OFLLBKBonus += nmOFLLBK;
+
+			OPBonus += nmOP;
+			LWPBonus += nmLWP;
+			LOPBonus += nmLOP;
+			BCBonus += nmBC;
+			KPBonus += nmKP;
+			DPBonus += nmDP;
 
 			if (isCaptain)
 			{
@@ -517,6 +539,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			DPBonus += silverDP;
 
 			SBonus += silverS;
+			STBonus += silverST;
 
             if(numSilver > reqNumSilver)
 			{
@@ -605,6 +628,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			}*/
 
 			SBonus += goldS;
+			EPBonus += goldEP;
 			
             cardMod += min(trickCards, numTrick); //5 free tricks
 			cardMod += min(goldCOM, numCom); //5 free COMs
@@ -774,20 +798,20 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Goalkeeping is ") << player.gk << _T(", should be ") << targetRate + GCCRBonus + GCRBonus << _T("; ");
         }
-        if(player.finish != targetRate + FBonus + FDBonus + OFLLBKBonus + BEDKSFBonus)
+        if(player.finish != targetRate + FBonus + FDBonus + BEDKSFBonus)
 		{
             errorTot++;
-			errorMsg << _T("Finishing is ") << player.finish << _T(", should be ") << targetRate + FBonus + FDBonus + OFLLBKBonus + BEDKSFBonus << _T("; ");
+			errorMsg << _T("Finishing is ") << player.finish << _T(", should be ") << targetRate + FBonus + FDBonus + BEDKSFBonus << _T("; ");
         }
-        if(player.lowpass != targetRate + OFLLBKBonus)
+        if(player.lowpass != targetRate + LWPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Low Pass is ") << player.lowpass << _T(", should be ") << targetRate + OFLLBKBonus << _T("; ");
+			errorMsg << _T("Low Pass is ") << player.lowpass << _T(", should be ") << targetRate + LWPBonus << _T("; ");
         }
-        if(player.loftpass != targetRate + OFLLBKBonus)
+        if(player.loftpass != targetRate + LOPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Lofted Pass is ") << player.loftpass << _T(", should be ") << targetRate + OFLLBKBonus << _T("; ");
+			errorMsg << _T("Lofted Pass is ") << player.loftpass << _T(", should be ") << targetRate + LOPBonus << _T("; ");
         }
         if(player.header != targetRate + baseBonus)
 		{
@@ -824,20 +848,20 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Physical Contact is ") << player.phys_cont << _T(", should be ") << targetRate << _T("; ");
         }
-        if(player.kick_pwr != targetRate + OFLLBKBonus + baseBonus)
+        if(player.kick_pwr != targetRate + baseBonus + KPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Kicking Power is ") << player.kick_pwr << _T(", should be ") << targetRate + OFLLBKBonus + baseBonus << _T("; ");
+			errorMsg << _T("Kicking Power is ") << player.kick_pwr << _T(", should be ") << targetRate + baseBonus + KPBonus << _T("; ");
         }
-        if(player.exp_pwr != targetRate + BEDKSFBonus + baseBonus)
+        if(player.exp_pwr != targetRate + BEDKSFBonus + baseBonus + EPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Explosive Power is ") << player.exp_pwr << _T(", should be ") << targetRate + BEDKSFBonus + baseBonus << _T("; ");
+			errorMsg << _T("Explosive Power is ") << player.exp_pwr << _T(", should be ") << targetRate + BEDKSFBonus + baseBonus + EPBonus << _T("; ");
         }
-        if(player.ball_ctrl != targetRate + OFLLBKBonus + baseBonus)
+        if(player.ball_ctrl != targetRate + baseBonus + BCBonus)
 		{
             errorTot++;
-			errorMsg << _T("Ball Control is ") << player.ball_ctrl << _T(", should be ") << targetRate + OFLLBKBonus + baseBonus << _T("; ");
+			errorMsg << _T("Ball Control is ") << player.ball_ctrl << _T(", should be ") << targetRate + baseBonus + BCBonus << _T("; ");
         }
         if(player.ball_win != targetRate + baseBonus)
 		{
@@ -859,20 +883,20 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Place Kicking is ") << player.place_kick << _T(", should be ") << targetRate + baseBonus << _T("; ");
         }
-        if(player.stamina != targetRate + baseBonus)
+        if(player.stamina != targetRate + baseBonus + STBonus)
 		{
             errorTot++;
-			errorMsg << _T("Stamina is ") << player.stamina << _T(", should be ") << targetRate + baseBonus << _T("; ");
+			errorMsg << _T("Stamina is ") << player.stamina << _T(", should be ") << targetRate + baseBonus + STBonus << _T("; ");
         }
         if(player.speed != targetRate + BEDKSFBonus + baseBonus)
 		{
             errorTot++;
 			errorMsg << _T("Speed is ") << player.speed << _T(", should be ") << targetRate + BEDKSFBonus + baseBonus << _T("; ");
         }
-        if(player.atk != targetRate + OFLLBKBonus)
+        if(player.atk != targetRate + OPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Attacking Prowess is ") << player.atk << _T(", should be ") << targetRate + OFLLBKBonus << _T("; ");
+			errorMsg << _T("Attacking Prowess is ") << player.atk << _T(", should be ") << targetRate + OPBonus << _T("; ");
         }
         if(player.def != targetRate + DPBonus + BCDPBonus)
 		{
