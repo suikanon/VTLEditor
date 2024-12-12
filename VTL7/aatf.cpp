@@ -425,6 +425,12 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 					errorTot++;
 					errorMsg << _T("Can't use Track Back card with A positions in CF, AMF, CMF, LB or RB; ");
 				}
+
+				if (jj == 19)
+				{
+					errorTot++;
+					errorMsg << _T("Long Throw card is not allowed; ");
+				}
             }
         }
 		for(int jj=0;jj<7;jj++)
