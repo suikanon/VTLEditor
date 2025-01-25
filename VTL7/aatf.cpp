@@ -53,6 +53,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int goldForm = 8;
 	int silverForm = 8;
 	int regForm = 4;
+	int gkForm = 6;
 
 	int goldIR = 1; //Injury resistance
 	int silverIR = 1;
@@ -72,7 +73,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int nmLOP = 11;
 	int nmBC = 11;
 	int nmKP = 11;
-	int nmDP = 4;
+	int nmDP = 5;
 	int nmBase = 0;
 	int nmBCDP = 0;
 
@@ -495,7 +496,12 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				errorMsg << _T("Regulars can't be captain; ");
 			}
 
-            if(player.form+1 != regForm)
+			if (player.reg_pos == 0 && player.form + 1 != gkForm)
+			{
+				errorTot++;
+				errorMsg << _T("Form is ") << player.form + 1 << _T(", should be ") << gkForm << _T("; ");
+			}
+            else if(player.reg_pos != 0 && player.form+1 != regForm)
 			{
                 errorTot++;
 				errorMsg << _T("Form is ") << player.form+1 << _T(", should be ") << regForm << _T("; ");

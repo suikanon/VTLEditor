@@ -7,6 +7,7 @@
 #include <Windows.h>
 #pragma comment(lib, "Winmm.lib")
 #include <mmsystem.h>
+#include <iostream>
 
 #include <dwmapi.h>
 //----------------------------------------------------------------------
@@ -170,7 +171,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("UC2 Editor 1.0"),
+		_T("VTL8 Editor 1.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -881,6 +882,8 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("187"));
 
+						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
+
 						/*if (heightNum == 187 || heightNum == 194)
 						{
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("3"));
@@ -930,6 +933,8 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						int heightNum = wcstol(height, 0, 10); */
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("187"));
+
+						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
 						/*if (heightNum == 200)
 						{
@@ -983,9 +988,15 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 							else if (ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT || ii == IDT_ABIL_BCON || ii == IDT_ABIL_KPOW)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("88"));
 							else if (ii == IDT_ABIL_DEFP)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("81"));
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
 							else
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
+						
+
+						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 0, 0))
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("6"));
+						}
 						/*if ((
 							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 6, 0) ||
 							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 7, 0) ||
@@ -1022,6 +1033,13 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+
+						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 2, 0) == 0)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("6"));
+						}
+
+						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
 						/*if (heightNum == 191 || heightNum == 198)
 						{
