@@ -171,7 +171,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("VTL8 Editor 1.0"),
+		_T("VTLA3 Editor 1.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -866,8 +866,8 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
 							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("97"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("91"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("95"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("90"));
+						//SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("95"));
 
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
@@ -880,7 +880,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);*/
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("187"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
 
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
@@ -915,10 +915,12 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					{
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("92"));
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("88"));
 
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_STAM, WM_SETTEXT, 0, (LPARAM)_T("88"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("86"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("94"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("84"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_ATKP, WM_SETTEXT, 0, (LPARAM)_T("93"));
+
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
@@ -980,22 +982,26 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10); */
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("187"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("189"));
 						int ii;
 						for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
 							if (ii == IDT_ABIL_ATKP)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("90"));
-							else if (ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT || ii == IDT_ABIL_BCON || ii == IDT_ABIL_KPOW)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("88"));
-							else if (ii == IDT_ABIL_DEFP)
+							else if (ii == IDT_ABIL_CLEA || ii == IDT_ABIL_DRIB || ii == IDT_ABIL_BCON || ii == IDT_ABIL_KPOW || ii == IDT_ABIL_BWIN)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
+							else if (ii == IDT_ABIL_DEFP || ii == IDT_ABIL_EXPL)
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("85"));
+							else if (ii == IDT_ABIL_FINI)
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("95"));
+							else if (ii == IDT_ABIL_STAM || ii == IDT_ABIL_COVE || ii == IDT_ABIL_REFL)
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("72"));
 							else
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
 						
 
 						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 0, 0))
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("6"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("7"));
 						}
 						/*if ((
 							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 6, 0) ||
@@ -1089,14 +1095,39 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 				break;
 				case IDB_SET_STATS:
 				{
-					if(HIWORD(W)==BN_CLICKED)
+					if (HIWORD(W) == BN_CLICKED)
 					{
 						int ii;
 						TCHAR buffer[3];
 						GetDlgItemText(H, IDT_SET_STATS, buffer, 3);
-						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
+						for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
 						{
 							SetDlgItemText(ghw_tab1, ii, buffer);
+						}
+					}
+				}
+				break;
+				case IDB_MAKE_CAPT:
+				{
+					if (HIWORD(W) == BN_CLICKED)
+					{
+						int ii;
+						TCHAR buffer[3];
+						for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+						{
+							wchar_t skill[0x1000];
+
+							SendDlgItemMessage(ghw_tab1, ii, WM_GETTEXT, (WPARAM)(sizeof(skill) / sizeof(skill[0])), (LPARAM)skill);
+
+							int skillNum = wcstol(skill, 0, 10);
+							skillNum += 1;
+
+							wchar_t newSkill[0x1000];
+							swprintf_s(newSkill, L"%d", skillNum);
+
+							wprintf(L"%s\n", newSkill);
+
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)newSkill);
 						}
 					}
 				}

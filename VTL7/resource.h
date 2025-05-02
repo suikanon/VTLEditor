@@ -90,6 +90,7 @@
 #define	IDT_SET_STATS	1144
 #define	IDC_SET_STATS	1145
 #define	IDB_CAPTAIN		1146
+#define IDB_MAKE_CAPT   1147
 
 #define IDD_TAB_ONE		1200
 #define IDS_PLAY_CF		1201
