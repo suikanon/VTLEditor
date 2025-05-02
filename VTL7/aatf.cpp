@@ -96,7 +96,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int trickCards = 5;
 
 	int regCOM = 1;
-	int silverCOM = 3;
+	int silverCOM = 2;
 	int goldCOM = 3;
 
 	int maxCOM = 5;
