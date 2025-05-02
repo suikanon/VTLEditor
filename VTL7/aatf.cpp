@@ -785,11 +785,6 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			else if (countA > freeAPositions + max(0, cardLimit - cardCount))
 			{
 				errorTot++;
-				errorMsg << _T("Has ") << countA;
-				errorMsg << _T("Has ") << freeAPositions;
-				errorMsg << _T("Has ") << max(0, cardLimit - cardCount);
-				errorMsg << _T("Has ") << cardLimit;
-				errorMsg << _T("Has ") << cardCount;
 				errorMsg << _T("Has ") << countA << _T(" A positions, only allowed ") << freeAPositions + max(0, cardLimit - cardCount) << _T(". Remove cards to add A position slots; ");
 			}
 		}
