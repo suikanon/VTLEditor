@@ -95,16 +95,16 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 	int trickCards = 5;
 
-	int regCOM = 1;
+	int regCOM = 2;
 	int silverCOM = 2;
-	int goldCOM = 2;
+	int goldCOM = 1;
 
 	int maxCOM = 5;
 
 	int gk = 2;
 
 	int nmAllowedHeight = 189;
-	int silverAllowedHeight = 187;
+	int silverAllowedHeight = 185;
 	int goldAllowedHeight = 183;
 
 	/*int giga = 2;

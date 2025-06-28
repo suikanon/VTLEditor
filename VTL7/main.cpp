@@ -1000,10 +1000,6 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
 						
 
-						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 0, 0))
-						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("7"));
-						}
 						/*if ((
 							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 6, 0) ||
 							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 7, 0) ||
@@ -1043,7 +1039,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 2, 0) == 0)
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("6"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("7"));
 						}
 
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
