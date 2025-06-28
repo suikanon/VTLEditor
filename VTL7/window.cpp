@@ -729,7 +729,7 @@ void setup_tab1(HWND H)
 		x1, y1+ydiff*11, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_FIRS, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("One-touch Pass"), 
+	hw_new = CreateWindowEx(0, _T("Button"), _T("One-touch Pass*"), 
 		BS_AUTOCHECKBOX | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 
 		x1, y1+ydiff*12, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_ONET, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
@@ -749,7 +749,7 @@ void setup_tab1(HWND H)
 		x1, y1+ydiff*15, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_OUTS, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("Rabona*"), 
+	hw_new = CreateWindowEx(0, _T("Button"), _T("Rabona"), 
 		BS_AUTOCHECKBOX | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 
 		x1, y1+ydiff*16, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_RABO, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);

@@ -44,7 +44,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int giantFootedness = 4;
 
 	int goldRate = 97;
-	int silverRate = 88;
+	int silverRate = 87;
 	int regRate = 77;
 	int gkRate = 77;
 	int reqNumGold = 2;
@@ -60,11 +60,11 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int regIR = 1;
 
 	int silverDP = 6;
-	int silverOP = 5;
+	int silverOP = 6;
 	int silverST = 0;
-	int silverS = -4;
+	int silverS = -3;
 	int goldS = -7;
-	int goldEP = 0;
+	int goldEP = -3;
 	int nmGCCR = 0;
 	int nmGCR = 0;
 	int nmOFLLBK = 0;
@@ -97,7 +97,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 	int regCOM = 1;
 	int silverCOM = 2;
-	int goldCOM = 3;
+	int goldCOM = 2;
 
 	int maxCOM = 5;
 
@@ -105,7 +105,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 	int nmAllowedHeight = 189;
 	int silverAllowedHeight = 187;
-	int goldAllowedHeight = 185;
+	int goldAllowedHeight = 183;
 
 	/*int giga = 2;
 	int giant = 7;
@@ -433,7 +433,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 					isCaptain = true;
 				}
                 //Trick cards may be free, count number
-                if(jj<6 || jj == 9 || jj==16 || jj == 21 || jj==28 || jj==29 || jj==30 || jj==34 || jj == 11)
+                if(jj<6 || jj == 9 || jj == 21 || jj==28 || jj==29 || jj==30 || jj==34 || jj == 11 || jj == 12)
 				{
                     hasTrick = true;
 					numTrick++;
@@ -794,17 +794,6 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			cardsSwappedForAPositions = 0;
 		}
 
-
-		/*errorMsg << _T("Has ") << cardCount;
-		errorMsg << _T("\r\n");
-		errorMsg << _T("Has ") << min(freeCOMs, numCom);
-		errorMsg << _T("\r\n");
-		errorMsg << _T("Has ") << numTrick;
-		errorMsg << _T("\r\n");
-		errorMsg << _T("Has ") << cardMin;
-		errorMsg << _T("\r\n");
-		errorMsg << _T("Has ") << cardsSwappedForAPositions;
-		errorMsg << _T("\r\n");*/
 
 		if (cardCount - min(freeCOMs, numCom) - numTrick < cardMin - cardsSwappedForAPositions)
 		{

@@ -867,6 +867,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
 							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("97"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("90"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("94"));
 						//SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("95"));
 
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
@@ -880,7 +881,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);*/
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("183"));
 
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
@@ -915,9 +916,9 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					{
 						int ii;
 						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("88"));
+							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("87"));
 
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("94"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("93"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("84"));
 						SendDlgItemMessage(ghw_tab1, IDT_ABIL_ATKP, WM_SETTEXT, 0, (LPARAM)_T("93"));
 
@@ -934,7 +935,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10); */
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("187"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("185"));
 
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
