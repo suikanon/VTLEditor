@@ -444,10 +444,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				}
 
 				//Track Back not allowed with CF, AMF or CMF
-				if (jj == 23 && (player.play_pos[6] == 2 || player.play_pos[11] == 2 || player.play_pos[10] == 2))
+				if (jj == 23 && (player.play_pos[6] == 2 || player.play_pos[11] == 2 || player.play_pos[10] == 2 || player.play_pos[0] == 2))
 				{
 					errorTot++;
-					errorMsg << _T("Can't use Track Back card on player with A positions on CMF, LB or RB; ");
+					errorMsg << _T("Can't use Track Back card on player with A positions on CF, CMF, LB or RB; ");
 				}
 
 				if (jj == 19)
