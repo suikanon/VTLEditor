@@ -987,7 +987,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						int ii;
 						for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
 							if (ii == IDT_ABIL_ATKP)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("90"));
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("88"));
 							else if (ii == IDT_ABIL_CLEA || ii == IDT_ABIL_DRIB || ii == IDT_ABIL_BCON || ii == IDT_ABIL_KPOW || ii == IDT_ABIL_BWIN)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
 							else if (ii == IDT_ABIL_DEFP || ii == IDT_ABIL_EXPL)

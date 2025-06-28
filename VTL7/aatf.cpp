@@ -68,7 +68,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int nmGCCR = 0;
 	int nmGCR = 0;
 	int nmOFLLBK = 0;
-	int nmOP = 13;
+	int nmOP = 11;
 	int nmF = 18;
 	int nmLWP = 0;
 	int nmLOP = 0;
