@@ -171,7 +171,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("VTLA3 Editor 1.0"),
+		_T("VTL9 Friendlies Editor 1.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -994,6 +994,8 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("85"));
 							else if (ii == IDT_ABIL_FINI)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("95"));
+							else if (ii == IDT_ABIL_CATC)
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
 							else if (ii == IDT_ABIL_STAM || ii == IDT_ABIL_COVE || ii == IDT_ABIL_REFL)
 								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("72"));
 							else

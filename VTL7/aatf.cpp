@@ -82,6 +82,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int nmST = -5;
 	int nmCov = -5;
 	int nmR = -5;
+	int nmCat = 5;
 	int nmBase = 0;
 	int nmBCDP = 0;
 
@@ -414,6 +415,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int CovBonus = 0;
 		int RBonus = 0;
 		int BWBonus = 0;
+		int CatBonus = 0;
 
 		int allowedHeight = 0;
 
@@ -513,6 +515,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			CovBonus += nmCov;
 			RBonus += nmR;
 			BWBonus += nmBW;
+			CatBonus += nmCat;
 
 			allowedHeight = nmAllowedHeight;
 
@@ -863,10 +866,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Swerve is ") << player.swerve << _T(", should be ") << targetRate + SBonus << _T("; ");
         }
-        if(player.catching != targetRate + GCCRBonus + GCRBonus)
+        if(player.catching != targetRate + GCCRBonus + GCRBonus + CatBonus)
 		{
             errorTot++;
-			errorMsg << _T("Catching is ") << player.catching << _T(", should be ") << targetRate + GCCRBonus + GCRBonus << _T("; ");
+			errorMsg << _T("Catching is ") << player.catching << _T(", should be ") << targetRate + GCCRBonus + GCRBonus + CatBonus << _T("; ");
         }
         if(player.clearing != targetRate + GCCRBonus + GCRBonus + baseBonus + CleBonus)
 		{
