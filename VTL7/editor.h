@@ -433,7 +433,6 @@ struct player_entry : player_export
 			this->def = pImport.def; 
 			this->gk = pImport.gk; //Goalkeeping 
 			this->drib = pImport.drib; //Dribbling 
-			this->mo_fk = pImport.mo_fk; //Motion: Free Kick
 			this->finish = pImport.finish; //Finishing 
 			this->lowpass = pImport.lowpass; //Low Pass 
 			this->loftpass = pImport.loftpass; //Lofted Pass 
@@ -489,7 +488,8 @@ struct player_entry : player_export
 			this->mo_hunchr = pImport.mo_hunchr; //Motion: Hunching (running) 
 			this->mo_pk = pImport.mo_pk; //Motion: Penalty Kick
 			this->mo_armr = pImport.mo_armr; //Motion: Arm Movement (running) 
-			this->mo_ck = pImport.mo_ck; //Motion: Corner Kick 
+			this->mo_ck = pImport.mo_ck; //Motion: Corner Kick
+			this->mo_fk = pImport.mo_fk; //Motion: Free Kick 
 			this->age = pImport.age; //Age 
 			this->b_edit_motion = pImport.b_edit_motion; //Motion edit
 			this->b_base_copy = pImport.b_base_copy; //Is Base Copy?
@@ -568,6 +568,15 @@ struct team_entry
 
 	bool b_changed;
 	bool b_show;
+
+	
+	int ManMarking1[11];
+	int ManMarking2[11];
+	int ManMarking3[11];
+
+	int AutoSub;
+	int AutoOffside;
+	int AutoPresetTactics;
 
 	//Constructor
 	team_entry()
