@@ -492,7 +492,31 @@ void fill_team_tactics16(int &current_byte, void* ghdescriptor, team_entry* gtea
 	current_byte+=0x1FA;
 
 	gteams[t_ind].captain_ind = (char)pDescriptorOld->data[current_byte];
-	current_byte+=0xA;
+	current_byte-=0x18B;
+	for(int ii=0; ii<11; ii++)
+	{
+	gteams[t_ind].ManMarking1[ii] = pDescriptorOld->data[current_byte];
+	current_byte++;
+	}
+	current_byte+=0x70;
+	for(int ii=0; ii<11; ii++)
+	{
+	gteams[t_ind].ManMarking2[ii] = pDescriptorOld->data[current_byte];
+	current_byte++;
+	}
+	current_byte+=0x70;
+	for(int ii=0; ii<11; ii++)
+	{
+	gteams[t_ind].ManMarking3[ii] = pDescriptorOld->data[current_byte];
+	current_byte++;
+	}
+	current_byte+=0x8E;
+	gteams[t_ind].AutoSub = pDescriptorOld->data[current_byte];
+	current_byte++;
+	gteams[t_ind].AutoOffside = pDescriptorOld->data[current_byte];
+	current_byte++;
+	gteams[t_ind].AutoPresetTactics = pDescriptorOld->data[current_byte];
+	current_byte+=0x4;
 }
 
 //-------------------------------------------------------------------------------------

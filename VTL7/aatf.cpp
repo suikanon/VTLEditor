@@ -1066,6 +1066,51 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
         errorTot++;
         errorMsg << _T("Number of Gold medals is ") << numGold << _T(", should be ") << reqNumGold << _T("; ");
     }
+	if (pesVersion == 16)
+	{
+		for(int ii=0; ii<11; ii++)
+		{ if(gteams[teamSel].ManMarking1[ii] != 255)
+			{
+				errorTot++;
+				errorMsg << _T("Man marking is set up on preset 1; ");
+				break;
+
+			}
+		}
+		for(int ii=0; ii<11; ii++)
+		{ if(gteams[teamSel].ManMarking2[ii] != 255)
+			{
+				errorTot++;
+				errorMsg << _T("Man marking is set up on preset 2; ");
+				break;
+
+			}
+		}
+		for(int ii=0; ii<11; ii++)
+		{ if(gteams[teamSel].ManMarking3[ii] != 255)
+			{
+				errorTot++;
+				errorMsg << _T("Man marking is set up on preset 3; ");
+				break;
+
+			}
+		}
+		if(gteams[teamSel].AutoSub!=0)
+			{
+				errorTot++;
+				errorMsg << _T("Auto subs are on; ");
+			}
+		if(gteams[teamSel].AutoOffside!=0)
+			{
+				errorTot++;
+				errorMsg << _T("Auto offside trap is on; ");
+			}
+		if(gteams[teamSel].AutoPresetTactics!=0)
+			{
+				errorTot++;
+				errorMsg << _T("Auto change preset tactics is on; ");
+			}
+	}	
 	if(errorMsg.rdbuf()->in_avail())
 		errorMsg << _T("\r\n");
 	errorMsg << _T("\r\nErrors: ") << errorTot << _T("\r\n");
