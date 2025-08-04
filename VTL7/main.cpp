@@ -903,8 +903,19 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
 
 						newName[0] = 0;
-						wcscat(newName, L"ccc9900ff");
-						wcscat(newName, oldName);
+						if (wcsncmp(oldName, L"ccc9900ff", 10) == 0 || wcsncmp(oldName, L"c51bbc4ff", 10) == 0) //name starts with the gold or silver color
+						{
+							std::wstring tempName(oldName);
+							tempName = tempName.substr(10); //remove the color part
+							wcscat(newName, L"ccc9900ff");
+							wcscat(newName, tempName.c_str());
+						}
+						else //name has no color
+						{
+							wcscat(newName, L"ccc9900ff");
+							wcscat(newName, oldName);
+
+						}
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
 					}
@@ -963,9 +974,19 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
 
 						newName[0] = 0;
-						wcscat(newName, L"c51bbc4ff");
+						if (wcsncmp(oldName, L"ccc9900ff", 10) == 0 || wcsncmp(oldName, L"c51bbc4ff", 10) == 0) //name starts with the gold or silver color
+						{
+							std::wstring tempName(oldName);
+							tempName = tempName.substr(10); //remove the color
+							wcscat(newName, L"c51bbc4ff");
+							wcscat(newName, tempName.c_str());
+						}
+						else //name has no color
+						{
+							wcscat(newName, L"c51bbc4ff");
+							wcscat(newName, oldName);
 
-						wcscat(newName, oldName);
+						}
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
 					}
@@ -1089,6 +1110,27 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("98"));
 							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("89"));
 						}*/
+
+						wchar_t oldName[0x1000];
+						wchar_t newName[0x1000];
+
+						//this is to remove any name colors that may have been added via the gold/silver player option
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
+
+						newName[0] = 0;
+						if (wcsncmp(oldName, L"ccc9900ff", 10) == 0 || wcsncmp(oldName, L"c51bbc4ff", 10) == 0 ) //name starts with gold or silver color
+						{
+							std::wstring tempName(oldName);
+							tempName = tempName.substr(10); //remove the color
+							wcscat(newName, tempName.c_str());
+						}
+						else //the name doesn't have a color
+						{
+							wcscat(newName, oldName);
+						}
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
 					}
 				}
 				break;
