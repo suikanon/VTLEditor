@@ -48,19 +48,20 @@ void setup_main(HWND H)
 		20, 552, 250, 26, H, (HMENU)IDB_MAKE_SILV, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("Regular"), 
-		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 
-		20, 584, 60, 26, H, (HMENU)IDB_MAKE_REGU, GetModuleHandle(NULL), NULL);
+	hw_new = CreateWindowEx(0, _T("Button"), _T("Regular"),
+		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
+		20, 584, 100, 26, H, (HMENU)IDB_MAKE_REGU, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("Captain"),
+	/*hw_new = CreateWindowEx(0, _T("Button"), _T("Captain"), //hidden as no longer used
 		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
 		80, 584, 60, 26, H, (HMENU)IDB_MAKE_CAPT, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
+	*/
 
 	hw_new = CreateWindowEx(0, _T("Button"), _T("Set Stats"),
 		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		140, 584, 80, 26, H, (HMENU)IDB_SET_STATS, GetModuleHandle(NULL), NULL);
+		120, 584, 100, 26, H, (HMENU)IDB_SET_STATS, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
 	hw_new = CreateWindowEx(WS_EX_CLIENTEDGE, _T("EDIT"), _T(""), 
