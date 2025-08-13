@@ -43,7 +43,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int gigaFootedness = 4;
 	int giantFootedness = 4;
 
-	int goldRate = 97;
+	int goldRate = 95;
 	int silverRate = 87;
 	int regRate = 77;
 	int gkRate = 77;
@@ -53,60 +53,65 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 	int goldForm = 8;
 	int silverForm = 8;
 	int regForm = 4;
-	int gkForm = 7;
+	int gkForm = 8;
 
 	int goldIR = 1; //Injury resistance
 	int silverIR = 1;
 	int regIR = 1;
 
-	int silverDP = 6;
-	int silverOP = 6;
+	int silverDP = 5;
+	int silverOP = 0;
 	int silverST = 0;
-	int silverS = -3;
-	int goldS = -7;
-	int goldEP = -3;
+	int silverS = -5;
+	int goldS = -5;
+	int goldEP = -5;
+	int goldBW = -5;
+	int goldST = 2;
+	int goldSP = -2;
 	int nmGCCR = 0;
 	int nmGCR = 0;
 	int nmOFLLBK = 0;
-	int nmOP = 11;
-	int nmF = 18;
+	int nmOP = 8;
+	int nmF = 8;
 	int nmLWP = 0;
 	int nmLOP = 0;
 	int nmBC = 5;
 	int nmCle = 5;
-	int nmD = 5;
+	int nmD = 0;
 	int nmKP = 5;
-	int nmBW = 5;
-	int nmDP = 8;
+	int nmBW = 8;
+	int nmDP = 10;
 	int nmEP = 8;
 	int nmST = -5;
 	int nmCov = -5;
-	int nmR = -5;
+	int nmR = 0;
 	int nmCat = 5;
+	int nmBodC = 5;
+	int nmJ = 5;
 	int nmBase = 0;
 	int nmBCDP = 0;
 
-	int freeAPositions = 3;
+	int freeAPositions = 2;
 
-	int regSkillCardsMin = 4;
-	int medalSkillCardsMin = 4;
+	int regSkillCardsMin = 3;
+	int medalSkillCardsMin = 3;
 
-	int regSkillCardsMax = 6;
-	int medalSkillCardsMax = 6;
+	int regSkillCardsMax = 5;
+	int medalSkillCardsMax = 5;
 
 	int trickCards = 5;
 
-	int regCOM = 2;
-	int silverCOM = 2;
+	int regCOM = 1;
+	int silverCOM = 1;
 	int goldCOM = 1;
 
 	int maxCOM = 5;
 
 	int gk = 2;
 
-	int nmAllowedHeight = 189;
-	int silverAllowedHeight = 185;
-	int goldAllowedHeight = 183;
+	int nmAllowedHeight = 191;
+	int silverAllowedHeight = 182;
+	int goldAllowedHeight = 179;
 
 	/*int giga = 2;
 	int giant = 7;
@@ -218,7 +223,8 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int weakFoot = 2;
         bool hasTrick = false;
 		int targetRate = 0;
-		int rating = player.jump;
+		int rating = player.drib; //this needs to be a stat that isn't changed from base rates
+
         /*rating = max(player.gk, rating);
         rating = max(player.finish, rating);
         rating = max(player.lowpass, rating);
@@ -416,6 +422,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		int RBonus = 0;
 		int BWBonus = 0;
 		int CatBonus = 0;
+		int BodCBonus = 0;
+		int SPBonus = 0;
+		int JBonus = 0;
 
 		int allowedHeight = 0;
 
@@ -446,7 +455,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				}
 
 				//Track Back not allowed with CF, AMF or CMF
-				if (jj == 23 && (player.play_pos[6] == 2 || player.play_pos[11] == 2 || player.play_pos[10] == 2 || player.play_pos[0] == 2))
+				if (jj == 23 && (player.play_pos[0] == 2 || player.play_pos[6] == 2 || player.play_pos[11] == 2 || player.play_pos[10] == 2))
 				{
 					errorTot++;
 					errorMsg << _T("Can't use Track Back card on player with A positions on CF, CMF, LB or RB; ");
@@ -516,6 +525,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			RBonus += nmR;
 			BWBonus += nmBW;
 			CatBonus += nmCat;
+			BodCBonus += nmBodC;
+			JBonus += nmJ;
+			
 
 			allowedHeight = nmAllowedHeight;
 
@@ -673,6 +685,9 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 
 			SBonus += goldS;
 			EPBonus += goldEP;
+			BWBonus += goldBW;
+			STBonus += goldST;
+			SPBonus += goldSP;
 
 			
 			allowedHeight = goldAllowedHeight;
@@ -733,10 +748,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 		}
 
 		//Check player card count
-		if (cardCount > cardLimit)
+		if (cardCount - numTrick > cardLimit - numTrick) //don't include trick cards in either count
 		{
 			errorTot++;
-			errorMsg << _T("Has ") << cardCount << _T(" cards, only allowed ") << cardLimit << _T("; ");
+			errorMsg << _T("Has ") << cardCount - numTrick << _T(" non-trick cards, only allowed ") << cardLimit - numTrick << _T("; ");
 		}
 		/*errorMsg << _T("Has ") << confirmedNMWMFBuff << (player.reg_pos == 9) << player.play_pos[8];
 		errorMsg << _T("Has ") << player.play_pos[0];CF
@@ -881,10 +896,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Reflexes is ") << player.reflex << _T(", should be ") << targetRate + GCCRBonus + baseBonus + RBonus << _T("; ");
         }
-        if(player.body_ctrl != targetRate + BCDPBonus)
+        if(player.body_ctrl != targetRate + BCDPBonus + BodCBonus)
 		{
             errorTot++;
-			errorMsg << _T("Body Control is ") << player.body_ctrl << _T(", should be ") << targetRate + BCDPBonus << _T("; ");
+			errorMsg << _T("Body Control is ") << player.body_ctrl << _T(", should be ") << targetRate + BCDPBonus + BodCBonus << _T("; ");
         }
         if(player.phys_cont != targetRate && pesVersion!=16) //Not in 16
 		{
@@ -911,10 +926,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Ball winning is ") << player.ball_win << _T(", should be ") << targetRate + baseBonus + BWBonus << _T("; ");
         }
-        if(player.jump != targetRate + baseBonus)
+        if(player.jump != targetRate + baseBonus + JBonus)
 		{
             errorTot++;
-			errorMsg << _T("Jump is ") << player.jump << _T(", should be ") << targetRate + baseBonus << _T("; ");
+			errorMsg << _T("Jump is ") << player.jump << _T(", should be ") << targetRate + baseBonus + JBonus << _T("; ");
         }
         if(player.cover != targetRate + CovBonus)
 		{
@@ -931,10 +946,10 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
             errorTot++;
 			errorMsg << _T("Stamina is ") << player.stamina << _T(", should be ") << targetRate + baseBonus + STBonus << _T("; ");
         }
-        if(player.speed != targetRate + BEDKSFBonus + baseBonus)
+        if(player.speed != targetRate + BEDKSFBonus + baseBonus + SPBonus)
 		{
             errorTot++;
-			errorMsg << _T("Speed is ") << player.speed << _T(", should be ") << targetRate + BEDKSFBonus + baseBonus << _T("; ");
+			errorMsg << _T("Speed is ") << player.speed << _T(", should be ") << targetRate + BEDKSFBonus + baseBonus + SPBonus << _T("; ");
         }
         if(player.atk != targetRate + OPBonus)
 		{
