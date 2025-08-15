@@ -886,6 +886,32 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("179"));
 
+						//check if the player is captain, and give them +1 all stats if they are
+						if (gn_teamsel > -1) //prevents a crash if button pressed with no team selected
+						{
+							if (gteams[gplayers[gn_playind[gn_listsel]].team_ind].captain_ind == gplayers[gn_playind[gn_listsel]].team_lineup_ind) 
+							{
+								int ii;
+								TCHAR buffer[3];
+								for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+								{
+									wchar_t skill[0x1000];
+
+									SendDlgItemMessage(ghw_tab1, ii, WM_GETTEXT, (WPARAM)(sizeof(skill) / sizeof(skill[0])), (LPARAM)skill);
+
+									int skillNum = wcstol(skill, 0, 10);
+									skillNum += 1;
+
+									wchar_t newSkill[0x1000];
+									swprintf_s(newSkill, L"%d", skillNum);
+
+									wprintf(L"%s\n", newSkill);
+
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)newSkill);
+								}
+							}
+						}
+
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
 						/*if (heightNum == 187 || heightNum == 194)
@@ -950,6 +976,32 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 						int heightNum = wcstol(height, 0, 10); */
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("182"));
+
+						//check if the player is captain, and give them +1 all stats if they are
+						if (gn_teamsel > -1) //prevents a crash if button pressed with no team selected
+						{
+							if (gteams[gplayers[gn_playind[gn_listsel]].team_ind].captain_ind == gplayers[gn_playind[gn_listsel]].team_lineup_ind)
+							{
+								int ii;
+								TCHAR buffer[3];
+								for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+								{
+									wchar_t skill[0x1000];
+
+									SendDlgItemMessage(ghw_tab1, ii, WM_GETTEXT, (WPARAM)(sizeof(skill) / sizeof(skill[0])), (LPARAM)skill);
+
+									int skillNum = wcstol(skill, 0, 10);
+									skillNum += 1;
+
+									wchar_t newSkill[0x1000];
+									swprintf_s(newSkill, L"%d", skillNum);
+
+									wprintf(L"%s\n", newSkill);
+
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)newSkill);
+								}
+							}
+						}
 
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
@@ -1159,7 +1211,8 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					}
 				}
 				break;
-				case IDB_MAKE_CAPT:
+
+				/*case IDB_MAKE_CAPT: //no longer needed as make gold/silver buttons do this
 				{
 					if (HIWORD(W) == BN_CLICKED)
 					{
@@ -1182,7 +1235,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)newSkill);
 						}
 					}
-				}
+				}*/
 				break;
 				case IDM_DATA_AATFC: //Run AATF on currently-selected team and show results in a dialog box
 				{
