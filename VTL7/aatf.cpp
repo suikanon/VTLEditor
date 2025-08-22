@@ -619,7 +619,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 				errorMsg << _T("Only 2 A positions for medals;");
 			}*/
 
-            cardMod += min(trickCards, numTrick); //5 free tricks
+            cardMod += numTrick; //5 free tricks
 			cardMod += min(silverCOM, numCom); //3 free COM
 			cardLimit = medalSkillCardsMax + cardMod; //6 skill cards
 			freeCOMs = silverCOM;
@@ -692,7 +692,7 @@ void aatf_single(HWND hAatfbox, int pesVersion, int teamSel, player_entry* gplay
 			
 			allowedHeight = goldAllowedHeight;
 			
-            cardMod += min(trickCards, numTrick); //5 free tricks
+            cardMod += numTrick; //5 free tricks
 			cardMod += min(goldCOM, numCom); //5 free COMs
 			cardLimit = medalSkillCardsMax + cardMod; //6 skill cards
 			freeCOMs = goldCOM;
