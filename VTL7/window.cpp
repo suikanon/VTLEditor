@@ -50,18 +50,18 @@ void setup_main(HWND H)
 
 	hw_new = CreateWindowEx(0, _T("Button"), _T("Regular"),
 		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		20, 584, 100, 26, H, (HMENU)IDB_MAKE_REGU, GetModuleHandle(NULL), NULL);
+		20, 584, 60, 26, H, (HMENU)IDB_MAKE_REGU, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	/*hw_new = CreateWindowEx(0, _T("Button"), _T("Captain"), //hidden as no longer used
+	hw_new = CreateWindowEx(0, _T("Button"), _T("Buffed"), 
 		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		80, 584, 60, 26, H, (HMENU)IDB_MAKE_CAPT, GetModuleHandle(NULL), NULL);
+		80, 584, 60, 26, H, (HMENU)IDB_MAKE_BUFF, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
-	*/
+	
 
 	hw_new = CreateWindowEx(0, _T("Button"), _T("Set Stats"),
 		BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP,
-		120, 584, 100, 26, H, (HMENU)IDB_SET_STATS, GetModuleHandle(NULL), NULL);
+		140, 584, 80, 26, H, (HMENU)IDB_SET_STATS, GetModuleHandle(NULL), NULL);
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
 	hw_new = CreateWindowEx(WS_EX_CLIENTEDGE, _T("EDIT"), _T(""), 
@@ -612,7 +612,7 @@ void setup_tab1(HWND H)
 		x1, y1+ydiff*2, xc, 17, ghw_tab1, (HMENU)IDB_COM_SPBU, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("Incisive Run"), 
+	hw_new = CreateWindowEx(0, _T("Button"), _T("Incisive Run*"), 
 		BS_AUTOCHECKBOX | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 
 		x1, y1+ydiff*3, xc, 17, ghw_tab1, (HMENU)IDB_COM_INCI, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
@@ -627,7 +627,7 @@ void setup_tab1(HWND H)
 		x1, y1+ydiff*5, xc, 17, ghw_tab1, (HMENU)IDB_COM_CROS, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("Long Ranger"), 
+	hw_new = CreateWindowEx(0, _T("Button"), _T("Long Ranger*"), 
 		BS_AUTOCHECKBOX | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 
 		x1, y1+ydiff*6, xc, 17, ghw_tab1, (HMENU)IDB_COM_LNGR, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
@@ -730,7 +730,7 @@ void setup_tab1(HWND H)
 		x1, y1+ydiff*11, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_FIRS, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
 
-	hw_new = CreateWindowEx(0, _T("Button"), _T("One-touch Pass*"), 
+	hw_new = CreateWindowEx(0, _T("Button"), _T("One-touch Pass"), 
 		BS_AUTOCHECKBOX | WS_TABSTOP | WS_CHILD | WS_VISIBLE, 
 		x1, y1+ydiff*12, xc, 17, ghw_tab1, (HMENU)IDB_SKIL_ONET, GetModuleHandle(NULL), NULL);	
 	setup_control(hw_new, ghFont, scale_cntl_proc);
