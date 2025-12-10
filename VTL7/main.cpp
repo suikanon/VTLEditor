@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include <dwmapi.h>
+#include "stats.h"
 //----------------------------------------------------------------------
 /*Function prototypes*/
 /*
@@ -171,7 +172,7 @@ int APIENTRY _tWinMain(HINSTANCE I, HINSTANCE PI, LPTSTR CL, int SC)
 	ghw_main = CreateWindowEx(
 		0,
 		wc.lpszClassName,
-		_T("VTL9 Editor 1.0"),
+		_T("Unity Cup 3 Editor 0.0"),
 		WS_OVERLAPPEDWINDOW,
 		20, 20, 1120+144, 700,
 		NULL, NULL, ghinst, NULL);
@@ -863,20 +864,26 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 				{
 					if(HIWORD(W)==BN_CLICKED)
 					{
+						using namespace gold; //use gold stats only
 						int ii;
-						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("95"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("90"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("90"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_BWIN, WM_SETTEXT, 0, (LPARAM)_T("90"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_STAM, WM_SETTEXT, 0, (LPARAM)_T("97"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("93"));
-						//SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("95"));
+						for (ii = IDT_ABIL_ATKP;ii < gi_lastAbility;ii += 2) 
+						{
+							if (stat_array[(ii - IDT_ABIL_ATKP) / 2] == 0) //stat is not changed from base stat value
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(base_stat).c_str());
+							}
+							else //stat is changed
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(stat_array[(ii - IDT_ABIL_ATKP) / 2]).c_str());
+							}
 
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+						}
+						CheckDlgButton(ghw_tab1, IDB_SKIL_MALI, BST_CHECKED); //set malicia to on
+
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)std::to_wstring(form).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)std::to_wstring(injury_resistance).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_usage).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_accuracy).c_str());
 
 						/*wchar_t height[0x1000];
 
@@ -884,8 +891,9 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10);*/
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("179"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)std::to_wstring(height).c_str());;
 
+						/* captain no longer gets a +1 stat boost
 						//check if the player is captain, and give them +1 all stats if they are
 						if (gn_teamsel > -1) //prevents a crash if button pressed with no team selected
 						{
@@ -911,7 +919,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 								}
 							}
 						}
-
+						*/
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
 						/*if (heightNum == 187 || heightNum == 194)
@@ -954,29 +962,36 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 				{
 					if(HIWORD(W)==BN_CLICKED)
 					{
+						using namespace silver; //use silver stats only
 						int ii;
-						for(ii=IDT_ABIL_ATKP;ii<gi_lastAbility;ii+=2)
-							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("87"));
+						for (ii = IDT_ABIL_ATKP;ii < gi_lastAbility;ii += 2)
+						{
+							if (stat_array[(ii - IDT_ABIL_ATKP) / 2] == 0) //stat is not changed from base stat value
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(base_stat).c_str());
+							}
+							else //stat is changed
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(stat_array[(ii - IDT_ABIL_ATKP) / 2]).c_str());
+							}
 
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("92"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_SWER, WM_SETTEXT, 0, (LPARAM)_T("82"));
-						//SendDlgItemMessage(ghw_tab1, IDT_ABIL_ATKP, WM_SETTEXT, 0, (LPARAM)_T("90"));
+						}
+						CheckDlgButton(ghw_tab1, IDB_SKIL_MALI, BST_CHECKED); //set malicia to on
 
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
-
-						//SendDlgItemMessage(ghw_tab1, IDT_ABIL_DEFP, WM_SETTEXT, 0, (LPARAM)_T("89"));
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)std::to_wstring(form).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)std::to_wstring(injury_resistance).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_usage).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_accuracy).c_str());
 
 						/*wchar_t height[0x1000];
 
 						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_GETTEXT, (WPARAM)(sizeof(height) / sizeof(height[0])), (LPARAM)height);
 
-						int heightNum = wcstol(height, 0, 10); */
+						int heightNum = wcstol(height, 0, 10);*/
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("182"));
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)std::to_wstring(height).c_str());;
 
+						/* captain no longer gets a +1 stat boost
 						//check if the player is captain, and give them +1 all stats if they are
 						if (gn_teamsel > -1) //prevents a crash if button pressed with no team selected
 						{
@@ -1002,7 +1017,7 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 								}
 							}
 						}
-
+						*/
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
 
 						/*if (heightNum == 200)
@@ -1059,31 +1074,21 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 
 						int heightNum = wcstol(height, 0, 10); */
 
-						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)_T("191"));
+						using namespace nm; //use nm stats only
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)std::to_wstring(height).c_str());;
 						int ii;
-						for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
-							if (ii == IDT_ABIL_DEFP)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("87"));
-							else if (ii == IDT_ABIL_BODB || ii == IDT_ABIL_BCON || ii == IDT_ABIL_KPOW)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
-							else if(ii == IDT_ABIL_CLEA)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
-							else if (ii == IDT_ABIL_ATKP)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("85"));
-							else if ( ii == IDT_ABIL_EXPL)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("85"));
-							else if (ii == IDT_ABIL_FINI)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("85"));
-							else if (ii == IDT_ABIL_BWIN)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("85"));
-							else if (ii == IDT_ABIL_CATC)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
-							else if (ii == IDT_ABIL_STAM || ii == IDT_ABIL_COVE)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("72"));
-							else if (ii == IDT_ABIL_JUMP)
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
-							else
-								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
+						for (ii = IDT_ABIL_ATKP;ii < gi_lastAbility;ii += 2)
+						{
+							if (stat_array[(ii - IDT_ABIL_ATKP) / 2] == 0) //stat is not changed from base stat value
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(base_stat).c_str());
+							}
+							else //stat is changed
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(stat_array[(ii - IDT_ABIL_ATKP) / 2]).c_str());
+							}
+
+						}
 						
 
 						/*if ((
@@ -1117,15 +1122,17 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 								else
 									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("80"));
 						}*/
-						
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("4"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)_T("1"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("4"));
-						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("4"));
+						CheckDlgButton(ghw_tab1, IDB_SKIL_MALI, BST_CHECKED); //set malicia to on
 
-						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 2, 0) == 0)
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)std::to_wstring(form).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)std::to_wstring(injury_resistance).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_usage).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_accuracy).c_str());
+
+						if (SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 2, 0) == 0) //player is a gk
 						{
-							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)_T("8"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)std::to_wstring(gk_form).c_str());
+							SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)std::to_wstring(gk_height).c_str());;
 						}
 
 						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
@@ -1197,6 +1204,147 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 					}
 				}
 				break;
+				case IDB_MAKE_BUFF:
+				{
+					if (HIWORD(W) == BN_CLICKED)
+					{
+
+
+						/*wchar_t height[0x1000];
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_GETTEXT, (WPARAM)(sizeof(height) / sizeof(height[0])), (LPARAM)height);
+
+						int heightNum = wcstol(height, 0, 10); */
+
+						using namespace buffed; //use buffed player stats only
+						SendDlgItemMessage(ghw_main, IDT_PLAY_HGT, WM_SETTEXT, 0, (LPARAM)std::to_wstring(height).c_str());;
+						int ii;
+						for (ii = IDT_ABIL_ATKP;ii < gi_lastAbility;ii += 2)
+						{
+							if (stat_array[(ii - IDT_ABIL_ATKP) / 2] == 0) //stat is not changed from base stat value
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(base_stat).c_str());
+							}
+							else //stat is changed
+							{
+								SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)std::to_wstring(stat_array[(ii - IDT_ABIL_ATKP) / 2]).c_str());
+							}
+
+						}
+
+
+						/*if ((
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 6, 0) ||
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 7, 0) ||
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 9, 0) ||
+							SendDlgItemMessage(ghw_main, IDC_PLAY_RPOS, CB_GETCURSEL, 10, 0)
+							) && (heightNum == 181 || heightNum == 186 || heightNum == 193 || heightNum == 206))
+						{
+							int ii;
+							for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC || ii == IDT_ABIL_COVE)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("81"));
+								else if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_SWER || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("93"));
+								else if (ii == IDT_ABIL_DEFP || ii == IDT_ABIL_BODB)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("86"));
+								else
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("84"));
+						}
+						else
+						{
+							int ii;
+							for (ii = IDT_ABIL_ATKP; ii < gi_lastAbility; ii += 2)
+								if (ii == IDT_ABIL_GOAL || ii == IDT_ABIL_CATC  || ii == IDT_ABIL_COVE)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("77"));
+								else if (ii == IDT_ABIL_ATKP || ii == IDT_ABIL_SWER || ii == IDT_ABIL_FINI || ii == IDT_ABIL_LOWP || ii == IDT_ABIL_LOFT)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("89"));
+								else if (ii == IDT_ABIL_DEFP || ii == IDT_ABIL_BODB)
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("82"));
+								else
+									SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)_T("80"));
+						}*/
+						CheckDlgButton(ghw_tab1, IDB_SKIL_MALI, BST_CHECKED); //set malicia to on
+
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_FORM, WM_SETTEXT, 0, (LPARAM)std::to_wstring(form).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_INJU, WM_SETTEXT, 0, (LPARAM)std::to_wstring(injury_resistance).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_usage).c_str());
+						SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_accuracy).c_str());
+						if (SendDlgItemMessage(ghw_tab1, IDS_PLAY_LB, TBM_GETPOS, 0, 0)==2|| SendDlgItemMessage(ghw_tab1, IDS_PLAY_RB, TBM_GETPOS, 0, 0) == 2|| SendDlgItemMessage(ghw_tab1, IDS_PLAY_CMF, TBM_GETPOS, 0, 0) == 2 || SendDlgItemMessage(ghw_tab1, IDS_PLAY_DMF, TBM_GETPOS, 0, 0) == 2) //player has a playable position of LB, RB, CMF, or DMF
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_usage_debuff).c_str());
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)std::to_wstring(weak_foot_accuracy_debuff).c_str());
+						}
+
+						Button_SetCheck(GetDlgItem(ghw_tab1, IDB_SKIL_LTHR), 0);
+
+						/*if (heightNum == 191 || heightNum == 198)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("3"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("3"));
+						}
+
+						if (heightNum == 205  || heightNum == 210)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKUS, WM_SETTEXT, 0, (LPARAM)_T("2"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_WKAC, WM_SETTEXT, 0, (LPARAM)_T("2"));
+						}*/
+
+						/*if (heightNum == 175)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BCON, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_KPOW, WM_SETTEXT, 0, (LPARAM)_T("86"));
+
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("86"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("95"));
+						}
+						if (heightNum == 181)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_BCON, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_EXPL, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_KPOW, WM_SETTEXT, 0, (LPARAM)_T("90"));
+
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_SPED, WM_SETTEXT, 0, (LPARAM)_T("90"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("99"));
+						}
+
+						if (heightNum == 180)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("94"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("85"));
+						}
+						if (heightNum == 186)
+						{
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_FINI, WM_SETTEXT, 0, (LPARAM)_T("98"));
+							SendDlgItemMessage(ghw_tab1, IDT_ABIL_DRIB, WM_SETTEXT, 0, (LPARAM)_T("89"));
+						}*/
+
+						wchar_t oldName[0x1000];
+						wchar_t newName[0x1000];
+
+						//this is to remove any name colors that may have been added via the gold/silver player option
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_GETTEXT, (WPARAM)(sizeof(oldName) / sizeof(oldName[0])), (LPARAM)oldName);
+
+						newName[0] = 0;
+						if (wcsncmp(oldName, L"ccc9900ff", 10) == 0 || wcsncmp(oldName, L"c51bbc4ff", 10) == 0) //name starts with gold or silver color
+						{
+							std::wstring tempName(oldName);
+							tempName = tempName.substr(10); //remove the color
+							wcscat(newName, tempName.c_str());
+						}
+						else //the name doesn't have a color
+						{
+							wcscat(newName, oldName);
+						}
+
+						SendDlgItemMessage(ghw_main, IDT_PLAY_NAME, WM_SETTEXT, 0, (LPARAM)newName);
+					}
+				}
+				break;
 				case IDB_SET_STATS:
 				{
 					if (HIWORD(W) == BN_CLICKED)
@@ -1235,8 +1383,9 @@ LRESULT CALLBACK wnd_proc(HWND H, UINT M, WPARAM W, LPARAM L)
 							SendDlgItemMessage(ghw_tab1, ii, WM_SETTEXT, 0, (LPARAM)newSkill);
 						}
 					}
-				}*/
-				break;
+				}
+				break;*/
+				
 				case IDM_DATA_AATFC: //Run AATF on currently-selected team and show results in a dialog box
 				{
 					if(gn_teamsel > -1)
